@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import './App.css';
 import SignUp from './pages/SignUp';
+import Login from './pages/Login';
 import { Route, Switch } from 'react-router-dom'
 
 class App extends Component {
@@ -13,11 +14,11 @@ class App extends Component {
               <SignUp {...props} />
             }>
           </Route>
-          {/* <Route path="/login"
+          <Route path="/login"
             component={props =>
               <Login {...props} />
             }>
-          </Route> */}
+          </Route>
         </Switch>
       </Fragment>
     )

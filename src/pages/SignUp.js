@@ -70,62 +70,6 @@ export default class SignUp extends Component {
         })
     }
 
-    // passwordConfirm = () => {
-    //     const { password, passwordConfirm } = this.state
-    //     if (password !== passwordConfirm) {
-    //         this.setState({ confirmError: true })
-    //     }
-    // }
-
-    // handleEmail = (event) => {
-    //     const target = event.target
-    //     const value = target.value
-
-    //     this.setState({
-    //         email: value
-    //     })
-    // }
-
-    // handleFirstName = (event) => {
-    //     const target = event.target
-    //     const value = target.value
-
-    //     this.setState({
-    //         firstname: value
-    //     })
-    // }
-
-    // handleLastName = (event) => {
-    //     const target = event.target
-    //     const value = target.value
-
-    //     this.setState({
-    //         lastname: value
-    //     })
-    // }
-
-    // handleCompanyName = (event) => {
-    //     const target = event.target
-    //     const value = target.value
-
-    //     this.setState({
-    //         companyname: value
-    //     })
-    // }
-
-    // handlePassword = (event) => {
-    //     const target = event.target
-    //     const value = target.value
-
-    //     this.setState({
-    //         password: value
-    //     })
-    // }
-
-    // handleSubmit = (event) => {
-    //     e.preventDefault();
-    // }
-
     render() {
         if (localStorage.getItem('jwt')) {
             return <Redirect to='/' />
@@ -139,9 +83,9 @@ export default class SignUp extends Component {
                             <Col md="4" className="h-100 d-flex align-items-start flex-column" id="login-left-banner">
                                 {this.state.hasError === true ? this.state.errors.map((errors, index) =>
                                     <div className="mt-1 ml-5 mr-5 mb-0">
-                                        <h6>
+                                        <small>
                                             <Alert color='danger' key={index}>{errors}</Alert>
-                                        </h6>
+                                        </small>
                                     </div>)
                                     : ''}
                                 <div className="mt-3 ml-5 mr-5 mb-0">
