@@ -6,7 +6,6 @@ import { Route, Switch } from 'react-router-dom'
 import Dashboard from './pages/Dashboard';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faPlus, faIgloo } from '@fortawesome/free-solid-svg-icons'
-import GetLazadaCode from './components/LazadaCode';
 
 library.add(faPlus, faIgloo)
 
@@ -28,11 +27,6 @@ class App extends Component {
           <Route path="/login"
             component={props =>
               <Login {...props} />
-            }>
-          </Route>
-          <Route path="/lazada/code"
-            component={props =>
-              <GetLazadaCode {...props} />
             }>
           </Route>
         </Switch>
