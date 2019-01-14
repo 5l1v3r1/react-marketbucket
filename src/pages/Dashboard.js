@@ -12,9 +12,10 @@ export default class Dashboard extends React.Component {
 
   state = {
     modal: false,
-    lazada: false,
-    shopee: false,
+    lazada: localStorage.lazadaToken,
+    shopee: localStorage.shopeeShopId,
     lazadaCode: new URL(window.location.href).searchParams.get('code'),
+    shopeeShopId: new URL(window.location.href).searchParams.get('shop_id')
   };
 
   toggle = () => {
@@ -23,7 +24,7 @@ export default class Dashboard extends React.Component {
     });
   }
   componentDidMount = () => {
-    if (this.state.lazadaCode) {
+    if (this.state.lazadaCode && !this.state.lazada) {
       axios({
         method: 'post',
         url: 'http://127.0.0.1:5000/api/v1/marketplaces/authorize/lazada',
@@ -37,15 +38,39 @@ export default class Dashboard extends React.Component {
       })
         .then(response => {
           const { data } = response;
-          const { message, lazada_token } = data
-          const marketplace = response.data.marketplace
+          const { message, lazada_token, lazada_refresh } = data
 
           localStorage.setItem('lazadaToken', lazada_token)
-          localStorage.setItem('lazadaMarketplace', JSON.stringify(marketplace))
+          localStorage.setItem('lazadaRefresh', lazada_refresh)
 
           this.setState({
-            lazada: true,
             lazadaCode: null
+          })
+        })
+        .catch(error => {
+          console.log(error)
+          this.setState({ errors: error.response.data.message })
+        });
+    } else if (this.state.shopeeShopId && !this.state.shopee) {
+      axios({
+        method: 'post',
+        url: 'http://127.0.0.1:5000/api/v1/marketplaces/authorize/shopee',
+        headers: {
+          'content-type': 'application/json',
+          'authorization': `Bearer ${localStorage.jwt}`
+        },
+        data: {
+          shop_id: this.state.shopeeShopId,
+        }
+      })
+        .then(response => {
+          const { data } = response;
+          const { message, shopee_shop_id } = data
+
+          localStorage.setItem('shopeeShopId', shopee_shop_id)
+
+          this.setState({
+            shopeeShopId: null
           })
         })
         .catch(error => {
