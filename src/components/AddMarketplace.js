@@ -10,11 +10,11 @@ class AddMarketplace extends React.Component {
   }
 
   render() {
-    const { modal, lazada, shopee, toggle } = this.props
+    const { modal, lazada, shopee, toggleModal } = this.props
     return (
       <div>
-        <Modal isOpen={modal} toggle={toggle} >
-          <ModalHeader toggle={toggle}>Choose Marketplace To Add</ModalHeader>
+        <Modal isOpen={modal} toggle={toggleModal} >
+          <ModalHeader toggle={toggleModal}>Choose Marketplace To Add</ModalHeader>
           <ModalBody>
             <ul style={{ listStyleType: 'none' }}>
               {lazada ? null : <>
@@ -37,7 +37,7 @@ class AddMarketplace extends React.Component {
             </ul>
           </ModalBody>
           <ModalFooter>
-            <Button color="secondary" onClick={this.props.toggle}>Cancel</Button>
+            <Button color="secondary" onClick={toggleModal}>Cancel</Button>
           </ModalFooter>
         </Modal>
       </div>

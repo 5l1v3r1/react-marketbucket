@@ -2,7 +2,13 @@ import React, { Component } from 'react'
 import { Alert, Container, Col, Row, Form, FormGroup, Input, Button } from 'reactstrap'
 import { Link, Redirect } from 'react-router-dom'
 import * as EmailValidator from 'email-validator'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import axios from 'axios'
+import GoogleLogin from 'react-google-login';
+
+const responseGoogle = (response) => {
+    console.log(response);
+  }
 
 
 
@@ -12,6 +18,7 @@ export default class Login extends Component {
         password: "",
         isLoading: false,
         hasError: false,
+        googleToken: null
     }
 
     handleSubmit = (e) => {
@@ -51,6 +58,35 @@ export default class Login extends Component {
         })
     }
 
+    // componentDidMount() {
+    //     if (this.state.googleToken) {
+    //         axios.post('http://localhost:5000/api/v1/authorize/google', {
+    //             email: this.state.email,
+    //             password: this.state.password
+    //         })
+    //             .then(response => {
+    //                 const jwt = response.data.auth_token
+    //                 const user = response.data.user
+    //                 localStorage.setItem('jwt', jwt)
+    //                 localStorage.setItem('currentUser', JSON.stringify(user))
+    //                 this.setState({
+    //                     isLoading: false,
+    //                 })
+    //             })
+    //             .catch(error => {
+    //                 console.log(error)
+    //                 this.setState({ hasError: true })
+    //             });
+    //     } else {
+    //         this.setState({
+    //             isLoading: false
+    //         })
+    //     }
+    // }
+    //     }
+    // }
+    
+
     render() {
         if (localStorage.getItem('jwt')) {
             return <Redirect to='/' />;
@@ -84,6 +120,7 @@ export default class Login extends Component {
                                             placeholder="email"
                                             // value={this.state.email}
                                             onInput={this.handleInput}
+                                            required
                                         />
                                         <Input
                                             className="form-control border-top-0 border-left-0 border-right-0 bg-transparent"
@@ -96,9 +133,17 @@ export default class Login extends Component {
                                             required
                                         />
                                         <div className="d-flex flex-row mt-3 ml-1">
-                                            <Button className="btn btn-dark" value="Login">
+                                            <Button className="btn btn-dark mr-2" value="Login">
                                                 Login
                                             </Button>
+                                            <GoogleLogin
+                                                clientId="34836066236-566duqgasugg0lohgjqhfcd10mah277j.apps.googleusercontent.com"
+                                                onSuccess={responseGoogle}
+                                                onFailure={responseGoogle}
+                                            />
+                                            {/* <Button className="btn btn-danger" value="Google-Login">
+                                            <FontAwesomeIcon icon={['fab', 'google']} />
+                                            </Button> */}
                                         </div>
                                     </FormGroup>
                                 </Form>

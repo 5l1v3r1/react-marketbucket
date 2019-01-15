@@ -5,7 +5,7 @@ import {
 } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Link, Redirect } from 'react-router-dom'
-import AddMarketplace from '../components/AddMarketplace';
+import AddMarketplace from './AddMarketplace';
 import axios from 'axios';
 
 export default class Dashboard extends React.Component {
@@ -15,14 +15,29 @@ export default class Dashboard extends React.Component {
     lazada: localStorage.lazadaToken,
     shopee: localStorage.shopeeShopId,
     lazadaCode: new URL(window.location.href).searchParams.get('code'),
-    shopeeShopId: new URL(window.location.href).searchParams.get('shop_id')
+    shopeeShopId: new URL(window.location.href).searchParams.get('shop_id'),
+    lazadaShop: false,
+    shopeeShop: false
   };
 
-  toggle = () => {
+  toggleModal = () => {
     this.setState({
       modal: !this.state.modal
     });
   }
+
+  toggleLazadaShop = () => {
+    this.setState({
+      lazadaShop:!this.state.lazadaShop
+    })
+  }
+
+  toggleShopeeShop = () => {
+    this.setState({
+      shopeeShop:!this.state.shopeeShop
+    })
+  }
+
   componentDidMount = () => {
     if (this.state.lazadaCode && !this.state.lazada) {
       axios({
@@ -81,15 +96,18 @@ export default class Dashboard extends React.Component {
   }
 
   render() {
-    const { modal, lazada, shopee } = this.state
-    if (localStorage.jwt) {
-      return (
-        <>
-          {modal ? <AddMarketplace toggle={this.toggle} modal={modal} lazada={lazada} shopee={shopee} /> : null}
-          <Row className='m-auto mt-5'>
+    const { modal, lazada, shopee, lazadaShop, shopeeShop } = this.state
+      if (lazadaShop) {
+        return <Redirect to='/lazada/shop' toggleLazadaShop={this.toggleLazadaShop} />;
+      } else if (shopeeShop) {
+        return <Redirect to='/shopee/shop' toggleShopeeShop={this.toggleShopeeShop} />;
+      } else {
+          return (
+          <>
+          {modal ? <AddMarketplace toggleModal={this.toggleModal} modal={modal} lazada={lazada} shopee={shopee} /> : null}
             <Col md='3' className='mb-auto ml-auto mr-auto mt-5'>
-              <Card onClick={this.toggle} className='btn'>
-                <div className='card-img-top border-bottom text-center'><FontAwesomeIcon icon="plus" size="7x" /></div>
+              <Card onClick={this.toggleModal} className='btn'>
+                <div className='card-img-top border-bottom text-center pb-2'><FontAwesomeIcon icon="plus" size="7x" /></div>
                 <CardBody>
                   <CardTitle className='text-center'><b>Add a marketplace</b></CardTitle>
                   <CardText className='text-left'>Choose the marketplace you would like to add and enter your credentials when prompted</CardText>
@@ -98,8 +116,8 @@ export default class Dashboard extends React.Component {
             </Col>
             {lazada ?
               <Col md='3' className='mb-auto ml-auto mr-auto mt-5'>
-                <Card>
-                  <CardImg top width="100%" src="https://s3.amazonaws.com/market.bucket/Lazada.jpg" alt="Lazada" className='border-bottom' />
+                <Card onClick={this.toggleLazadaShop} className='btn'>
+                  <CardImg top width="100%" src="https://s3.amazonaws.com/market.bucket/Lazada.jpg" alt="Lazada" className='border-bottom pb-2'/>
                   <CardBody>
                     <CardTitle className='text-center'><b>Lazada</b></CardTitle>
                     <CardText>Manage your Lazada Store</CardText>
@@ -109,20 +127,17 @@ export default class Dashboard extends React.Component {
               : null}
             {shopee ?
               <Col md='3' className='mb-auto ml-auto mr-auto mt-5'>
-                <Card >
-                  <CardImg top width="100%" src="https://s3.amazonaws.com/market.bucket/Shopee.jpg" alt="Shopee" className='border-bottom' />
+              <Card onClick={this.toggleShopeeShop} className='btn'>
+                  <CardImg top width="100%" src="https://s3.amazonaws.com/market.bucket/Shopee.jpg" alt="Shopee" className='border-bottom pb-2' />
                   <CardBody>
                     <CardTitle className='text-center'><b>Shopee</b></CardTitle>
-                    <CardText>Manage your Shopee store</CardText>
+                    <CardText>Manage your Shopee Store</CardText>
                   </CardBody>
                 </Card>
               </Col>
               : null}
-          </Row>
-        </>
-      );
-    } else {
-      return <Redirect to='/login' />;
-    }
+          </>
+        );
+      }
   };
 }
