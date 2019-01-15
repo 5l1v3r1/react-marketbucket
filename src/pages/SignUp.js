@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Link, Redirect } from 'react-router-dom'
 import axios from 'axios';
 import { Alert, Container, Col, Row, Form, FormGroup, Input, Button } from 'reactstrap'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import GoogleLogin from 'react-google-login';
 
 
@@ -51,7 +51,6 @@ export default class SignUp extends Component {
             .then(response => {
                 const { data } = response;
                 const { message, auth_token } = data
-                const user = response.data.user
                 
                 localStorage.setItem('jwt', auth_token)
                 // localStorage.setItem('currentUser', JSON.stringify(user))
@@ -90,7 +89,6 @@ export default class SignUp extends Component {
                 .then(response => {
                     const { data } = response;
                     const { message, auth_token } = data
-                    const user = response.data.user
 
                     localStorage.setItem('jwt', auth_token)
                     // localStorage.setItem('currentUser', JSON.stringify(user))

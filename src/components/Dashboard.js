@@ -7,6 +7,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Link, Redirect } from 'react-router-dom'
 import AddMarketplace from './AddMarketplace';
 import axios from 'axios';
+import LazadaShop from '../pages/LazadaShop';
+import ShopeeShop from '../pages/ShopeeShop';
 
 export default class Dashboard extends React.Component {
 
@@ -16,8 +18,8 @@ export default class Dashboard extends React.Component {
     shopee: localStorage.shopeeShopId === "null" ? null : localStorage.shopeeShopId,
     lazadaCode: new URL(window.location.href).searchParams.get('code'),
     shopeeShopId: new URL(window.location.href).searchParams.get('shop_id'),
-    lazadaShop: false,
-    shopeeShop: false
+    // lazadaShop: false,
+    // shopeeShop: false
   };
 
   toggleModal = () => {
@@ -26,17 +28,17 @@ export default class Dashboard extends React.Component {
     });
   }
 
-  toggleLazadaShop = () => {
-    this.setState({
-      lazadaShop:!this.state.lazadaShop
-    })
-  }
+  // toggleLazadaShop = () => {
+  //   this.setState({
+  //     lazadaShop:!this.state.lazadaShop
+  //   })
+  // }
 
-  toggleShopeeShop = () => {
-    this.setState({
-      shopeeShop:!this.state.shopeeShop
-    })
-  }
+  // toggleShopeeShop = () => {
+  //   this.setState({
+  //     shopeeShop:!this.state.shopeeShop
+  //   })
+  // }
 
   componentDidMount = () => {
     if (this.state.lazadaCode && !this.state.lazada) {
@@ -96,12 +98,10 @@ export default class Dashboard extends React.Component {
   }
 
   render() {
-    const { modal, lazada, shopee, lazadaShop, shopeeShop } = this.state
-      if (lazadaShop) {
-        return <Redirect to='/lazada/shop' toggleLazadaShop={this.toggleLazadaShop} />;
-      } else if (shopeeShop) {
-        return <Redirect to='/shopee/shop' toggleShopeeShop={this.toggleShopeeShop} />;
-      } else {
+    const { modal, lazada, shopee } = this.state
+      // } else if (shopeeShop) {
+      //   return <ShopeeShop toggleShopeeShop={this.toggleShopeeShop} logout={this.props.logout}/>;
+      // } else {
           return (
           <>
           {modal ? <AddMarketplace toggleModal={this.toggleModal} modal={modal} lazada={lazada} shopee={shopee} /> : null}
@@ -116,28 +116,32 @@ export default class Dashboard extends React.Component {
             </Col>
             {lazada ?
               <Col md='3' className='mb-auto ml-auto mr-auto mt-5'>
-                <Card onClick={this.toggleLazadaShop} className='btn'>
+            <Link to={'/lazada/shop'} logout={this.props.logout}>
+                <Card className='btn'>
                   <CardImg top width="100%" src="https://s3.amazonaws.com/market.bucket/Lazada.jpg" alt="Lazada" className='border-bottom pb-2'/>
                   <CardBody>
                     <CardTitle className='text-center'><b>Lazada</b></CardTitle>
                     <CardText>Manage your Lazada Store</CardText>
                   </CardBody>
                 </Card>
+              </Link>
               </Col>
               : null}
             {shopee ?
               <Col md='3' className='mb-auto ml-auto mr-auto mt-5'>
-              <Card onClick={this.toggleShopeeShop} className='btn'>
+              <Link to={'/shopee/shop'} logout={this.props.logout}>
+              <Card className='btn'>
                   <CardImg top width="100%" src="https://s3.amazonaws.com/market.bucket/Shopee.jpg" alt="Shopee" className='border-bottom pb-2' />
                   <CardBody>
                     <CardTitle className='text-center'><b>Shopee</b></CardTitle>
                     <CardText>Manage your Shopee Store</CardText>
                   </CardBody>
                 </Card>
+                </Link>
               </Col>
               : null}
           </>
         );
       }
   };
-}
+

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Alert, Container, Col, Row, Form, FormGroup, Input, Button } from 'reactstrap'
 import { Link, Redirect } from 'react-router-dom'
 import * as EmailValidator from 'email-validator'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import axios from 'axios'
 import GoogleLogin from 'react-google-login';
 
@@ -35,8 +35,7 @@ export default class Login extends Component {
             })
                 .then(response => {
                 const { data } = response;
-                const { message, auth_token, lazada_token, lazada_refresh, shop_id } = data
-                const user = response.data.user
+                const { auth_token, lazada_token, lazada_refresh, shop_id } = data
 
                 localStorage.setItem('jwt', auth_token)
                 // localStorage.setItem('currentUser', JSON.stringify(user))
@@ -86,7 +85,6 @@ export default class Login extends Component {
             .then(response => {
                 const { data } = response;
                 const { message, auth_token, lazada_token, lazada_refresh, shop_id } = data
-                const user = response.data.user
                 
                 localStorage.setItem('jwt', auth_token)
                 // localStorage.setItem('currentUser', JSON.stringify(user))

@@ -21,7 +21,6 @@ export default class Home extends Component {
 
     render(){  
         const {currentUrl} = this.state    
-        
         if (localStorage.getItem('jwt') ) {
             return(    
                 // Dashboard SECTION
@@ -29,7 +28,7 @@ export default class Home extends Component {
                     <Container fluid>
                         <Row>
                             <SideNavbar currentUrl={currentUrl} logout={this.logout}/>
-                            <Dashboard  />
+                            <Dashboard  logout={this.logout}/>
                         </Row>
                     </Container>
                 </section>
