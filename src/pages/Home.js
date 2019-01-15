@@ -13,7 +13,10 @@ export default class Home extends Component {
     logout = (e) => {
         localStorage.removeItem('jwt')
         localStorage.removeItem('currentUser')
-        this.forceUpdate()
+        localStorage.removeItem('lazadaToken')
+        localStorage.removeItem('lazadaRefresh')
+        localStorage.removeItem('shopeeShopId')
+        // this.forceUpdate()
     }
 
     render(){  

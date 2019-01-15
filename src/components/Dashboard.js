@@ -12,8 +12,8 @@ export default class Dashboard extends React.Component {
 
   state = {
     modal: false,
-    lazada: localStorage.lazadaToken,
-    shopee: localStorage.shopeeShopId,
+    lazada: localStorage.lazadaToken === "null" ? null : localStorage.lazadaToken,
+    shopee: localStorage.shopeeShopId === "null" ? null : localStorage.shopeeShopId,
     lazadaCode: new URL(window.location.href).searchParams.get('code'),
     shopeeShopId: new URL(window.location.href).searchParams.get('shop_id'),
     lazadaShop: false,

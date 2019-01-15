@@ -20,7 +20,7 @@ export default class SignUp extends Component {
         loading: false,
         hasError: false,
         errors: [],
-        googleProfile: {}
+        googleProfile: null
     }
     
     responseGoogle = ( response ) => {
@@ -34,28 +34,28 @@ export default class SignUp extends Component {
 
     componentDidUpdate = () => {
         const { googleProfile } = this.state
-        const { givenName, familyName, email } = googleProfile
         if (googleProfile) {
-        axios({
-            method: 'post',
-            url: 'http://127.0.0.1:5000/api/v1/authorize/google',
-            headers: {
-                'content-type': 'application/json',
-            },
-            data: {
-                first_name: givenName,
-                last_name: familyName,
-                email: email,
-            }
-        })
+            const { givenName, familyName, email } = googleProfile
+            axios({
+                method: 'post',
+                url: 'http://127.0.0.1:5000/api/v1/authorize/google',
+                headers: {
+                    'content-type': 'application/json',
+                },
+                data: {
+                    first_name: givenName,
+                    last_name: familyName,
+                    email: email,
+                }
+            })
             .then(response => {
                 const { data } = response;
                 const { message, auth_token } = data
                 const user = response.data.user
-
+                
                 localStorage.setItem('jwt', auth_token)
-                localStorage.setItem('currentUser', JSON.stringify(user))
-
+                // localStorage.setItem('currentUser', JSON.stringify(user))
+                
                 this.setState({
                     message: message,
                     confirmError: false
@@ -65,8 +65,8 @@ export default class SignUp extends Component {
                 console.log(error)
                 this.setState({ errors: error.response.data.message, hasError: true, confirmError: false })
             });
-
-      }
+            
+        }
     }
     
     createUser = (e) => {
@@ -93,7 +93,7 @@ export default class SignUp extends Component {
                     const user = response.data.user
 
                     localStorage.setItem('jwt', auth_token)
-                    localStorage.setItem('currentUser', JSON.stringify(user))
+                    // localStorage.setItem('currentUser', JSON.stringify(user))
 
                     this.setState({
                         message: message,

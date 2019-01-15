@@ -6,11 +6,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import axios from 'axios'
 import GoogleLogin from 'react-google-login';
 
-const responseGoogle = (response) => {
-    console.log(response);
-  }
-
-
 
 export default class Login extends Component {
     state = {
@@ -18,7 +13,16 @@ export default class Login extends Component {
         password: "",
         isLoading: false,
         hasError: false,
-        googleToken: null
+        googleProfile: null
+    }
+
+    responseGoogle = ( response ) => {
+        console.log(response);
+        if (response.profileObj) {
+            this.setState({
+                googleProfile : response.profileObj
+            })
+        }
     }
 
     handleSubmit = (e) => {
@@ -30,10 +34,17 @@ export default class Login extends Component {
                 password: this.state.password
             })
                 .then(response => {
-                    const jwt = response.data.auth_token
-                    const user = response.data.user
-                    localStorage.setItem('jwt', jwt)
-                    localStorage.setItem('currentUser', JSON.stringify(user))
+                const { data } = response;
+                const { message, auth_token, lazada_token, lazada_refresh, shop_id } = data
+                const user = response.data.user
+
+                localStorage.setItem('jwt', auth_token)
+                // localStorage.setItem('currentUser', JSON.stringify(user))
+
+                localStorage.setItem('lazadaToken', lazada_token)
+                localStorage.setItem('lazadaRefresh', lazada_refresh)
+                localStorage.setItem('shopeeShopId', shop_id)
+                
                     this.setState({
                         isLoading: false,
                     })
@@ -58,35 +69,45 @@ export default class Login extends Component {
         })
     }
 
-    // componentDidMount() {
-    //     if (this.state.googleToken) {
-    //         axios.post('http://localhost:5000/api/v1/authorize/google', {
-    //             email: this.state.email,
-    //             password: this.state.password
-    //         })
-    //             .then(response => {
-    //                 const jwt = response.data.auth_token
-    //                 const user = response.data.user
-    //                 localStorage.setItem('jwt', jwt)
-    //                 localStorage.setItem('currentUser', JSON.stringify(user))
-    //                 this.setState({
-    //                     isLoading: false,
-    //                 })
-    //             })
-    //             .catch(error => {
-    //                 console.log(error)
-    //                 this.setState({ hasError: true })
-    //             });
-    //     } else {
-    //         this.setState({
-    //             isLoading: false
-    //         })
-    //     }
-    // }
-    //     }
-    // }
+    componentDidUpdate = () => {
+        const { googleProfile } = this.state
+        if (googleProfile) {
+            const { email } = googleProfile
+            axios({
+                method: 'post',
+                url: 'http://127.0.0.1:5000/api/v1/authorize/google',
+                headers: {
+                    'content-type': 'application/json',
+                },
+                data: {
+                    email: email,
+                }
+            })
+            .then(response => {
+                const { data } = response;
+                const { message, auth_token, lazada_token, lazada_refresh, shop_id } = data
+                const user = response.data.user
+                
+                localStorage.setItem('jwt', auth_token)
+                // localStorage.setItem('currentUser', JSON.stringify(user))
+                
+                localStorage.setItem('lazadaToken', lazada_token)
+                localStorage.setItem('lazadaRefresh', lazada_refresh)
+                localStorage.setItem('shopeeShopId', shop_id)
+                
+                this.setState({
+                    message: message,
+                    confirmError: false
+                })
+            })
+            .catch(error => {
+                console.log(error)
+                this.setState({ errors: error.response.data.message, hasError: true, confirmError: false })
+            });
+            
+        }
+    }
     
-
     render() {
         if (localStorage.getItem('jwt')) {
             return <Redirect to='/' />;
@@ -138,8 +159,8 @@ export default class Login extends Component {
                                             </Button>
                                             <GoogleLogin
                                                 clientId="34836066236-566duqgasugg0lohgjqhfcd10mah277j.apps.googleusercontent.com"
-                                                onSuccess={responseGoogle}
-                                                onFailure={responseGoogle}
+                                                onSuccess={this.responseGoogle}
+                                                onFailure={this.responseGoogle}
                                             />
                                             {/* <Button className="btn btn-danger" value="Google-Login">
                                             <FontAwesomeIcon icon={['fab', 'google']} />
