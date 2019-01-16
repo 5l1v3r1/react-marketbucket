@@ -7,8 +7,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Link, Redirect } from 'react-router-dom'
 import AddMarketplace from './AddMarketplace';
 import axios from 'axios';
-import LazadaShop from '../pages/LazadaShop';
-import ShopeeShop from '../pages/ShopeeShop';
 
 export default class Dashboard extends React.Component {
 
@@ -18,8 +16,6 @@ export default class Dashboard extends React.Component {
     shopee: localStorage.shopeeShopId === "null" ? null : localStorage.shopeeShopId,
     lazadaCode: new URL(window.location.href).searchParams.get('code'),
     shopeeShopId: new URL(window.location.href).searchParams.get('shop_id'),
-    // lazadaShop: false,
-    // shopeeShop: false
   };
 
   toggleModal = () => {
@@ -27,18 +23,6 @@ export default class Dashboard extends React.Component {
       modal: !this.state.modal
     });
   }
-
-  // toggleLazadaShop = () => {
-  //   this.setState({
-  //     lazadaShop:!this.state.lazadaShop
-  //   })
-  // }
-
-  // toggleShopeeShop = () => {
-  //   this.setState({
-  //     shopeeShop:!this.state.shopeeShop
-  //   })
-  // }
 
   componentDidMount = () => {
     if (this.state.lazadaCode && !this.state.lazada) {
@@ -100,46 +84,46 @@ export default class Dashboard extends React.Component {
   render() {
     const { modal, lazada, shopee } = this.state
     const { logout } = this.props
-      return (
-        <>
-          {modal ? <AddMarketplace toggleModal={this.toggleModal} modal={modal} lazada={lazada} shopee={shopee} /> : null}
-            <Col md='3' className='mb-auto ml-auto mr-auto mt-5'>
-              <Card onClick={this.toggleModal} className='btn'>
-                <div className='card-img-top border-bottom text-center pb-2'><FontAwesomeIcon icon="plus" size="7x" /></div>
+    return (
+      <>
+        {modal ? <AddMarketplace toggleModal={this.toggleModal} modal={modal} lazada={lazada} shopee={shopee} /> : null}
+        <Col md='3' className='mb-auto ml-auto mr-auto mt-5'>
+          <Card onClick={this.toggleModal} className='btn'>
+            <div className='card-img-top border-bottom text-center pb-2'><FontAwesomeIcon icon="store" size="7x" /></div>
+            <CardBody>
+              <CardTitle className='text-center'><b>Add a marketplace</b></CardTitle>
+              <CardText className='text-left'>Choose the marketplace you would like to add and enter your credentials when prompted</CardText>
+            </CardBody>
+          </Card>
+        </Col>
+        {lazada ?
+          <Col md='3' className='mb-auto ml-auto mr-auto mt-5'>
+            <Link to={{ pathname: '/lazada/shop', state: {} }} >
+              <Card className='btn'>
+                <CardImg top width="100%" src="https://s3.amazonaws.com/market.bucket/Lazada.jpg" alt="Lazada" className='border-bottom pb-2' />
                 <CardBody>
-                  <CardTitle className='text-center'><b>Add a marketplace</b></CardTitle>
-                  <CardText className='text-left'>Choose the marketplace you would like to add and enter your credentials when prompted</CardText>
+                  <CardTitle className='text-center'><b>Lazada</b></CardTitle>
+                  <CardText>Manage your Lazada Store</CardText>
                 </CardBody>
               </Card>
-            </Col>
-            {lazada ?
-              <Col md='3' className='mb-auto ml-auto mr-auto mt-5'>
-            <Link to={{ pathname: '/lazada/shop', state: {} }} >
-                <Card className='btn'>
-                  <CardImg top width="100%" src="https://s3.amazonaws.com/market.bucket/Lazada.jpg" alt="Lazada" className='border-bottom pb-2'/>
-                  <CardBody>
-                    <CardTitle className='text-center'><b>Lazada</b></CardTitle>
-                    <CardText>Manage your Lazada Store</CardText>
-                  </CardBody>
-                </Card>
-              </Link>
-              </Col>
-              : null}
-            {shopee ?
-              <Col md='3' className='mb-auto ml-auto mr-auto mt-5'>
-              <Link to={{ pathname: '/shopee/shop', state: {} }} >
+            </Link>
+          </Col>
+          : null}
+        {shopee ?
+          <Col md='3' className='mb-auto ml-auto mr-auto mt-5'>
+            <Link to={{ pathname: '/shopee/shop', state: {} }} >
               <Card className='btn'>
-                  <CardImg top width="100%" src="https://s3.amazonaws.com/market.bucket/Shopee.jpg" alt="Shopee" className='border-bottom pb-2' />
-                  <CardBody>
-                    <CardTitle className='text-center'><b>Shopee</b></CardTitle>
-                    <CardText>Manage your Shopee Store</CardText>
-                  </CardBody>
-                </Card>
-                </Link>
-              </Col>
-              : null}
-          </>
-        );
-      }
-  };
+                <CardImg top width="100%" src="https://s3.amazonaws.com/market.bucket/Shopee.jpg" alt="Shopee" className='border-bottom pb-2' />
+                <CardBody>
+                  <CardTitle className='text-center'><b>Shopee</b></CardTitle>
+                  <CardText>Manage your Shopee Store</CardText>
+                </CardBody>
+              </Card>
+            </Link>
+          </Col>
+          : null}
+      </>
+    );
+  }
+};
 

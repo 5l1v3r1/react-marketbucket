@@ -1,9 +1,26 @@
 import axios from "axios";
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
+import {
+  Card, CardImg, CardText, CardBody,
+  CardTitle, CardSubtitle, Button, Row, Col,
+  CardLink, CardHeader, CardFooter
+} from 'reactstrap';
+import AddProducts from "./AddProducts";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default class LazadaProducts extends Component {
   state = {
-    lazadaProducts: null
+    lazadaProducts: null,
+    modal: false,
+    lazada: localStorage.lazadaToken === "null" ? null : localStorage.lazadaToken,
+    shopee: localStorage.shopeeShopId === "null" ? null : localStorage.shopeeShopId,
+
+  }
+
+  toggleModal = () => {
+    this.setState({
+      modal: !this.state.modal
+    });
   }
 
   componentDidMount = () => {
@@ -27,30 +44,44 @@ export default class LazadaProducts extends Component {
       });
   }
 
-  render () {
-    
-    const { lazadaProducts } = this.state
+  render() {
+
+    const { lazadaProducts, modal, lazada, shopee } = this.state
     return (
-      lazadaProducts ?
       <>
-      Total products : {lazadaProducts.total_products}
-      {lazadaProducts.products.map((product, index) => (
-        <ul key={index}>
-        <li>
-        <ul>
-<li>{product.attributes.name}</li>
-<li>{product.attributes.brand}</li>
-<li>{product.attributes.short_description}</li>
-<li>{product.skus[0].Status}</li>
-<li>{product.skus[0].quantity}</li>
-<li>{product.skus[0].price}</li>
-</ul>
-</li>
-</ul>
-      )
+        {modal ? <AddProducts toggleModal={this.toggleModal} modal={modal} lazada={lazada} shopee={shopee} /> : null}
+        <Col md='3' className='mb-auto ml-auto mr-auto mt-5'>
+          <Card onClick={this.toggleModal} className='btn'>
+            <div className='card-img-top border-bottom text-center pb-2'><FontAwesomeIcon icon="parachute-box" size='9x' /></div>
+            <CardBody>
+              <CardTitle className='text-center'><b>Add a product</b></CardTitle>
+              <CardText className='text-left'>Choose the marketplace you would like to add a product to and enter your product details when prompted</CardText>
+            </CardBody>
+          </Card>
+        </Col>
+        {lazadaProducts ?
+          lazadaProducts.products.map((product, index) => (
+            <Col md='3' key={index} className='mb-5 ml-auto mr-auto mt-5'>
+              <Card className=''>
+                <CardHeader>
+                  <CardTitle className='text-center'><b>{product.attributes.name}</b></CardTitle>
+                  <CardSubtitle className='text-center'>Brand : {product.attributes.brand}</CardSubtitle>
+                </CardHeader>
+                <CardImg className='border-bottom' top width="100%" src={product.skus[0].Images[0]} alt="Card image cap" />
+                <CardBody>
+                  {/* <CardText className='text-left'><span dangerouslySetInnerHTML={{ __html: product.attributes.short_description }} /></CardText> */}
+                  <CardText><span className='mr-5'>Price : {product.skus[0].price} MYR</span><span className='ml-4'>Stock : {product.skus[0].quantity}</span></CardText>
+                </CardBody>
+                <CardFooter>
+                  <CardLink className='mr-5' href={product.skus[0].Url} target="_blank" rel="noopener noreferrer">Product's Page</CardLink>
+                  <CardLink className='ml-5' href='#' target="_blank" rel="noopener noreferrer">Edit</CardLink>
+                </CardFooter>
+              </Card>
+            </Col>
+          )
+          )
+          : <p>No products yet!</p>}
+      </>
     )
   }
-  </> : <p>No products yet!</p>
-    )
-}
 }

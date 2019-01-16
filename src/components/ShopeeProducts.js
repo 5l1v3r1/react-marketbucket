@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 
 export default class ShopeeProducts extends Component {
   state = {
@@ -16,7 +16,6 @@ export default class ShopeeProducts extends Component {
       },
     })
       .then(response => {
-        debugger
         const { data } = response;
         const { products } = data
         this.setState({
@@ -29,28 +28,30 @@ export default class ShopeeProducts extends Component {
   }
 
   render() {
-
     const { shopeeProducts } = this.state
     return (
       shopeeProducts ?
         <>
           Total products : {shopeeProducts.length}
-          {/* {shopeeProducts.products.map((product, index) => (
-            <ul key={index}>
-              <li>
-                <ul>
-                  <li>{product.attributes.name}</li>
-                  <li>{product.attributes.brand}</li>
-                  <li>{product.attributes.short_description}</li>
-                  <li>{product.skus[0].Status}</li>
-                  <li>{product.skus[0].quantity}</li>
-                  <li>{product.skus[0].price}</li>
-                </ul>
-              </li>
-            </ul>
+          {shopeeProducts.map((product, index) => (
+            <Fragment key={index}>
+              <ul>
+                <li>
+                  <ul>
+                    <li>{product.name}</li>
+                    <li>{product.attributes[0].attribute_value}</li>
+                    <li>{product.description}</li>
+                    <li>{product.status}</li>
+                    <li>{product.stock}</li>
+                    <li>{product.price}</li>
+                  </ul>
+                </li>
+              </ul>
+              <hr />
+            </Fragment>
           )
           )
-          } */}
+          }
         </> : <p>No products yet!</p>
     )
   }

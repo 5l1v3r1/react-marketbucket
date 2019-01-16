@@ -2,34 +2,31 @@
 import React from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
-class AddMarketplace extends React.Component {
+export default class AddProducts extends React.Component {
 
 
   render() {
-    const { modal, lazada, shopee, toggleModal } = this.props
+    const { modal, toggleModal, lazada, shopee } = this.props
     return (
       <div>
         <Modal isOpen={modal} toggle={toggleModal} >
-          <ModalHeader toggle={toggleModal}>Choose Marketplace To Add</ModalHeader>
+          <ModalHeader toggle={toggleModal}>Where do you want to add your new product?</ModalHeader>
           <ModalBody>
             <ul style={{ listStyleType: 'none' }}>
-              {lazada ? null : <>
+              {!lazada ? null : <>
                 <li>
                   <a href="http://localhost:5000/api/v1/marketplaces/check/lazada">
                     <img height="100px" src="https://s3.amazonaws.com/market.bucket/Lazada.jpg" alt="lazada" />
                   </a>
                 </li>
                 <hr /> </>}
-              {shopee ? null : <>
+              {!shopee || !lazada ? null :
                 <li>
                   <a href="http://localhost:5000/api/v1/marketplaces/check/shopee">
-                    <img height="100px" src="https://s3.amazonaws.com/market.bucket/Shopee.jpg" alt="shopee" />
+                    <img height="100px" src="https://s3.amazonaws.com/market.bucket/image.jpg" alt="all marketplaces" />
                   </a>
                 </li>
-                <hr /></>}
-              <li>
-                More marketplaces coming soon...
-          </li>
+              }
             </ul>
           </ModalBody>
           <ModalFooter>
@@ -41,4 +38,3 @@ class AddMarketplace extends React.Component {
   }
 }
 
-export default AddMarketplace;

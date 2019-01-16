@@ -7,10 +7,10 @@ export default class SideNavbar extends Component {
 
 
   render() {
-    const {currentUrl} = this.props
-    
+    const { currentUrl } = this.props
+
     return (
-      <Col md="2" className="d-none d-md-block sidebar mb-auto ml-auto mr-auto mt-5">
+      <Col md="2" className="d-none d-md-block sidebar mb-auto ml-1 mr-1 mt-5">
         <div className="sidebar-sticky">
           <Nav className="flex-column">
             <NavItem className={`${currentUrl === '/' ? 'bg-primary' : ''}`} >
