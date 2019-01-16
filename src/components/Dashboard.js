@@ -99,11 +99,9 @@ export default class Dashboard extends React.Component {
 
   render() {
     const { modal, lazada, shopee } = this.state
-      // } else if (shopeeShop) {
-      //   return <ShopeeShop toggleShopeeShop={this.toggleShopeeShop} logout={this.props.logout}/>;
-      // } else {
-          return (
-          <>
+    const { logout } = this.props
+      return (
+        <>
           {modal ? <AddMarketplace toggleModal={this.toggleModal} modal={modal} lazada={lazada} shopee={shopee} /> : null}
             <Col md='3' className='mb-auto ml-auto mr-auto mt-5'>
               <Card onClick={this.toggleModal} className='btn'>
@@ -116,7 +114,7 @@ export default class Dashboard extends React.Component {
             </Col>
             {lazada ?
               <Col md='3' className='mb-auto ml-auto mr-auto mt-5'>
-            <Link to={'/lazada/shop'} logout={this.props.logout}>
+            <Link to={{ pathname: '/lazada/shop', state: {} }} >
                 <Card className='btn'>
                   <CardImg top width="100%" src="https://s3.amazonaws.com/market.bucket/Lazada.jpg" alt="Lazada" className='border-bottom pb-2'/>
                   <CardBody>
@@ -129,7 +127,7 @@ export default class Dashboard extends React.Component {
               : null}
             {shopee ?
               <Col md='3' className='mb-auto ml-auto mr-auto mt-5'>
-              <Link to={'/shopee/shop'} logout={this.props.logout}>
+              <Link to={{ pathname: '/shopee/shop', state: {} }} >
               <Card className='btn'>
                   <CardImg top width="100%" src="https://s3.amazonaws.com/market.bucket/Shopee.jpg" alt="Shopee" className='border-bottom pb-2' />
                   <CardBody>

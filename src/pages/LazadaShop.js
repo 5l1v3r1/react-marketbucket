@@ -10,6 +10,15 @@ export default class LazadaShop extends Component {
     currentUrl: this.props.match.path
   }
 
+  logout = (e) => {
+    localStorage.removeItem('jwt')
+    localStorage.removeItem('currentUser')
+    localStorage.removeItem('lazadaToken')
+    localStorage.removeItem('lazadaRefresh')
+    localStorage.removeItem('shopeeShopId')
+    // this.forceUpdate()
+}
+
   render () {
       const {currentUrl} = this.state    
       if (localStorage.getItem('jwt') ) {
@@ -18,7 +27,7 @@ export default class LazadaShop extends Component {
               <section className="h-100" id="lazada-shop"> 
                   <Container fluid>
                       <Row>
-                          <SideNavbar currentUrl={currentUrl} logout={this.props.logout}/>
+                          <SideNavbar currentUrl={currentUrl} logout={this.logout}/>
                           <LazadaProducts />
                       </Row>
                   </Container>
