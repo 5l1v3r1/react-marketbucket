@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { Link, Redirect } from 'react-router-dom'
 import axios from 'axios';
 import { Alert, Container, Col, Row, Form, FormGroup, Input, Button } from 'reactstrap'
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import GoogleLogin from 'react-google-login';
 
 
@@ -22,12 +21,12 @@ export default class SignUp extends Component {
         errors: [],
         googleProfile: null
     }
-    
-    responseGoogle = ( response ) => {
+
+    responseGoogle = (response) => {
         console.log(response);
         if (response.profileObj) {
             this.setState({
-                googleProfile : response.profileObj
+                googleProfile: response.profileObj
             })
         }
     }
@@ -48,26 +47,26 @@ export default class SignUp extends Component {
                     email: email,
                 }
             })
-            .then(response => {
-                const { data } = response;
-                const { message, auth_token } = data
-                
-                localStorage.setItem('jwt', auth_token)
-                // localStorage.setItem('currentUser', JSON.stringify(user))
-                
-                this.setState({
-                    message: message,
-                    confirmError: false
+                .then(response => {
+                    const { data } = response;
+                    const { message, auth_token } = data
+
+                    localStorage.setItem('jwt', auth_token)
+                    // localStorage.setItem('currentUser', JSON.stringify(user))
+
+                    this.setState({
+                        message: message,
+                        confirmError: false
+                    })
                 })
-            })
-            .catch(error => {
-                console.log(error)
-                this.setState({ errors: error.response.data.message, hasError: true, confirmError: false })
-            });
-            
+                .catch(error => {
+                    console.log(error)
+                    this.setState({ errors: error.response.data.message, hasError: true, confirmError: false })
+                });
+
         }
     }
-    
+
     createUser = (e) => {
         const { password, confirmPassword, firstName, lastName, storeName, email } = this.state
         e.preventDefault()

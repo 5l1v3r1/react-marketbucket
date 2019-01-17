@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-
+import { Link } from 'react-router-dom'
 export default class AddProducts extends React.Component {
 
 
@@ -15,9 +15,9 @@ export default class AddProducts extends React.Component {
             <ul style={{ listStyleType: 'none' }}>
               {!lazada ? null : <>
                 <li>
-                  <a href="http://localhost:5000/api/v1/marketplaces/check/lazada">
+                  <Link to={'/lazada/new'}>
                     <img height="100px" src="https://s3.amazonaws.com/market.bucket/Lazada.jpg" alt="lazada" />
-                  </a>
+                  </Link>
                 </li>
                 <hr /> </>}
               {!shopee || !lazada ? null :
