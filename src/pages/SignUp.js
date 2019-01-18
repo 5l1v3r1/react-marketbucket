@@ -2,8 +2,9 @@ import React, { Component } from 'react'
 import { Link, Redirect } from 'react-router-dom'
 import axios from 'axios';
 import { Alert, Container, Col, Row, Form, FormGroup, Input, Button } from 'reactstrap'
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-// import { faVrCardboard } from '@fortawesome/free-solid-svg-icons'
+import GoogleLogin from 'react-google-login';
+
+
 
 export default class SignUp extends Component {
     state = {
@@ -18,8 +19,53 @@ export default class SignUp extends Component {
         loading: false,
         hasError: false,
         errors: [],
+        googleProfile: null
     }
 
+    responseGoogle = (response) => {
+        console.log(response);
+        if (response.profileObj) {
+            this.setState({
+                googleProfile: response.profileObj
+            })
+        }
+    }
+
+    componentDidUpdate = () => {
+        const { googleProfile } = this.state
+        if (googleProfile) {
+            const { givenName, familyName, email } = googleProfile
+            axios({
+                method: 'post',
+                url: 'http://127.0.0.1:5000/api/v1/authorize/google',
+                headers: {
+                    'content-type': 'application/json',
+                },
+                data: {
+                    first_name: givenName,
+                    last_name: familyName,
+                    email: email,
+                }
+            })
+                .then(response => {
+                    const { data } = response;
+                    const { message, auth_token } = data
+
+                    localStorage.setItem('jwt', auth_token)
+                    // localStorage.setItem('currentUser', JSON.stringify(user))
+
+                    this.setState({
+                        message: message,
+                        confirmError: false
+                    })
+                })
+                .catch(error => {
+                    console.log(error)
+                    this.setState({ errors: error.response.data.message, hasError: true, confirmError: false })
+                });
+
+        }
+    }
 
     createUser = (e) => {
         const { password, confirmPassword, firstName, lastName, storeName, email } = this.state
@@ -42,10 +88,9 @@ export default class SignUp extends Component {
                 .then(response => {
                     const { data } = response;
                     const { message, auth_token } = data
-                    const user = response.data.user
 
                     localStorage.setItem('jwt', auth_token)
-                    localStorage.setItem('currentUser', JSON.stringify(user))
+                    // localStorage.setItem('currentUser', JSON.stringify(user))
 
                     this.setState({
                         message: message,
@@ -137,9 +182,15 @@ export default class SignUp extends Component {
                                         {this.state.confirmError ? <small style={{ color: "red" }}>Passwords don't match</small> : ""}
 
                                         <div className="d-flex flex-row mt-3 ml-1">
-                                            <Button className="btn btn-dark" value="Login" type="submit">
+                                            <Button className="btn btn-dark mr-2" value="Login" type="submit">
                                                 Sign Up
                                             </Button>
+                                            <GoogleLogin
+                                                clientId="34836066236-566duqgasugg0lohgjqhfcd10mah277j.apps.googleusercontent.com"
+                                                buttonText="Sign up with Google"
+                                                onSuccess={this.responseGoogle}
+                                                onFailure={this.responseGoogle}
+                                            />
                                         </div>
                                     </FormGroup>
                                 </Form>

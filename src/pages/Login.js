@@ -2,8 +2,9 @@ import React, { Component } from 'react'
 import { Alert, Container, Col, Row, Form, FormGroup, Input, Button } from 'reactstrap'
 import { Link, Redirect } from 'react-router-dom'
 import * as EmailValidator from 'email-validator'
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import axios from 'axios'
-
+import GoogleLogin from 'react-google-login';
 
 
 export default class Login extends Component {
@@ -12,6 +13,16 @@ export default class Login extends Component {
         password: "",
         isLoading: false,
         hasError: false,
+        googleProfile: null
+    }
+
+    responseGoogle = ( response ) => {
+        console.log(response);
+        if (response.profileObj) {
+            this.setState({
+                googleProfile : response.profileObj
+            })
+        }
     }
 
     handleSubmit = (e) => {
@@ -23,10 +34,16 @@ export default class Login extends Component {
                 password: this.state.password
             })
                 .then(response => {
-                    const jwt = response.data.auth_token
-                    const user = response.data.user
-                    localStorage.setItem('jwt', jwt)
-                    localStorage.setItem('currentUser', JSON.stringify(user))
+                const { data } = response;
+                const { auth_token, lazada_token, lazada_refresh, shop_id } = data
+
+                localStorage.setItem('jwt', auth_token)
+                // localStorage.setItem('currentUser', JSON.stringify(user))
+
+                localStorage.setItem('lazadaToken', lazada_token)
+                localStorage.setItem('lazadaRefresh', lazada_refresh)
+                localStorage.setItem('shopeeShopId', shop_id)
+                
                     this.setState({
                         isLoading: false,
                     })
@@ -51,6 +68,44 @@ export default class Login extends Component {
         })
     }
 
+    componentDidUpdate = () => {
+        const { googleProfile } = this.state
+        if (googleProfile) {
+            const { email } = googleProfile
+            axios({
+                method: 'post',
+                url: 'http://127.0.0.1:5000/api/v1/authorize/google',
+                headers: {
+                    'content-type': 'application/json',
+                },
+                data: {
+                    email: email,
+                }
+            })
+            .then(response => {
+                const { data } = response;
+                const { message, auth_token, lazada_token, lazada_refresh, shop_id } = data
+                
+                localStorage.setItem('jwt', auth_token)
+                // localStorage.setItem('currentUser', JSON.stringify(user))
+                
+                localStorage.setItem('lazadaToken', lazada_token)
+                localStorage.setItem('lazadaRefresh', lazada_refresh)
+                localStorage.setItem('shopeeShopId', shop_id)
+                
+                this.setState({
+                    message: message,
+                    confirmError: false
+                })
+            })
+            .catch(error => {
+                console.log(error)
+                this.setState({ errors: error.response.data.message, hasError: true, confirmError: false })
+            });
+            
+        }
+    }
+    
     render() {
         if (localStorage.getItem('jwt')) {
             return <Redirect to='/' />;
@@ -84,6 +139,7 @@ export default class Login extends Component {
                                             placeholder="email"
                                             // value={this.state.email}
                                             onInput={this.handleInput}
+                                            required
                                         />
                                         <Input
                                             className="form-control border-top-0 border-left-0 border-right-0 bg-transparent"
@@ -96,9 +152,17 @@ export default class Login extends Component {
                                             required
                                         />
                                         <div className="d-flex flex-row mt-3 ml-1">
-                                            <Button className="btn btn-dark" value="Login">
+                                            <Button className="btn btn-dark mr-2" value="Login">
                                                 Login
                                             </Button>
+                                            <GoogleLogin
+                                                clientId="34836066236-566duqgasugg0lohgjqhfcd10mah277j.apps.googleusercontent.com"
+                                                onSuccess={this.responseGoogle}
+                                                onFailure={this.responseGoogle}
+                                            />
+                                            {/* <Button className="btn btn-danger" value="Google-Login">
+                                            <FontAwesomeIcon icon={['fab', 'google']} />
+                                            </Button> */}
                                         </div>
                                     </FormGroup>
                                 </Form>
