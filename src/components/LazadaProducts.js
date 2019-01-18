@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { Component, Fragment } from 'react'
 import {
-  Card, CardImg, CardText, CardBody,
+  Card, CardImg, CardText, CardBody, Alert,
   CardTitle, CardSubtitle, Button, Row, Col,
   CardLink, CardHeader, CardFooter
 } from 'reactstrap';
@@ -61,7 +61,7 @@ export default class LazadaProducts extends Component {
         </Col>
         {lazadaProducts ?
           lazadaProducts.products.map((product, index) => (
-            <Col md='3' key={index} className='mb-5 ml-auto mr-auto mt-5'>
+            <Col md='3' key={index} className='mb-5 ml-5 mr-auto mt-5'>
               <Card className=''>
                 <CardHeader>
                   <CardTitle className='text-center'><b>{product.attributes.name}</b></CardTitle>
@@ -80,7 +80,7 @@ export default class LazadaProducts extends Component {
             </Col>
           )
           )
-          : <p>No products yet!</p>}
+          : <Col md='3' className='mb-5 ml-5 mr-auto mt-5'><Alert color='info'>Loading...</Alert></Col>}
       </>
     )
   }

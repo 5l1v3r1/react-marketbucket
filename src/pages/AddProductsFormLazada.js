@@ -3,13 +3,14 @@ import Select from 'react-select'
 import { Alert, Container, Col, Row, Form, FormGroup, Input, Button } from 'reactstrap'
 import axios from 'axios';
 import _ from 'underscore'
-import ColorOptions from '../containers/colorOptions';
+import ColorOptions from '../containers/ColorOptions';
+import BrandOptions from '../containers/BrandsLazada';
 
 
-export default class AddProductsForm extends Component {
+export default class AddProductsFormLazada extends Component {
   state = {
     tree: null,
-    brandOptions: [],
+    brandOptions: BrandOptions(),
     options1: [],
     options2: null,
     options3: null,
@@ -43,14 +44,11 @@ export default class AddProductsForm extends Component {
     })
       .then(response => {
         const { data } = response;
-        const { tree, brands } = data
+        const { tree } = data
         const options1 = tree.map((category) => (
           { 'value': category.name, 'label': category.name, 'id': category.category_id }
         ))
-        const brandOptions = brands.map((brand) => (
-          { 'value': brand.name, 'label': brand.name, 'name': "brand" }
-        ))
-        this.setState({ tree, options1, brandOptions })
+        this.setState({ tree, options1 })
       })
       .catch(error => {
         console.log(error)
@@ -155,13 +153,8 @@ export default class AddProductsForm extends Component {
         </Request>`}
     })
       .then(response => {
-        debugger
         const { data } = response;
-        const { tree } = data
-        const options1 = tree.map((category) => (
-          { 'value': category.name, 'label': category.name, 'id': category.category_id }
-        ))
-        this.setState({ tree, options1 })
+        this.setState({})
       })
       .catch(error => {
         console.log(error)
@@ -169,13 +162,21 @@ export default class AddProductsForm extends Component {
   }
 
   handleInput = (event) => {
-    if (event.name) {
+    if (event.name === 'color') {
       const field = event.name
       const value = event.value
       const selectedColor = event
       this.setState({
         [field]: value,
         selectedColor
+      })
+    } else if (event.name === 'brand') {
+      const field = event.name
+      const value = event.value
+      const selectedBrand = event
+      this.setState({
+        [field]: value,
+        selectedBrand
       })
     } else {
       const field = event.target.name
@@ -231,7 +232,7 @@ export default class AddProductsForm extends Component {
                   name="brand"
                   value={this.state.selectedBrand}
                   onChange={this.handleInput}
-                  options={this.state.brandOptions}
+                  options={this.state.brandOptions.map((brand) => ({ label: brand.name, value: brand.name, name: 'brand' }))}
                   placeholder="Brand"
                   required
                 />
@@ -263,7 +264,6 @@ export default class AddProductsForm extends Component {
                   className=""
                   name="quantity"
                   type='number'
-                  step="0.01"
                   placeholder="Quantity"
                   required
                 />

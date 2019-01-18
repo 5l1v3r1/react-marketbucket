@@ -9,7 +9,8 @@ import { faGoogle } from '@fortawesome/free-brands-svg-icons'
 import LazadaShop from './pages/LazadaShop';
 import ShopeeShop from './pages/ShopeeShop';
 import Home from './pages/Home';
-import AddProductsForm from './pages/AddProductsForm';
+import AddProductsFormLazada from './pages/AddProductsFormLazada';
+import AddProductsFormShopee from './pages/AddProductsFormShopee';
 
 library.add(faPlus, faIgloo, faGoogle, faStore, faParachuteBox)
 
@@ -40,12 +41,17 @@ class App extends Component {
           </Route>
           <Route path="/lazada/new"
             component={props =>
-              <AddProductsForm {...props} />
+              <AddProductsFormLazada {...props} />
             }>
           </Route>
           <Route path="/shopee/shop"
             component={props =>
               <ShopeeShop {...props} />
+            }>
+          </Route>
+          <Route path="/shopee/new"
+            component={props =>
+              <AddProductsFormShopee {...props} />
             }>
           </Route>
         </Switch>
