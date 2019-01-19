@@ -1,8 +1,8 @@
-import React, {Component} from 'react'
-import {Container,Row} from 'reactstrap'
+import React, { Component } from 'react'
+import { Container, Row } from 'reactstrap'
 import SideNavbar from '../components/SideNavbar'
 import Dashboard from '../components/Dashboard';
-import {Redirect} from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 import axios from 'axios';
 
 export default class Home extends Component {
@@ -19,23 +19,23 @@ export default class Home extends Component {
         // this.forceUpdate()
     }
 
-    render(){  
-        const {currentUrl} = this.state    
-        if (localStorage.getItem('jwt') ) {
-            return(    
+    render() {
+        const { currentUrl } = this.state
+        if (localStorage.getItem('jwt')) {
+            return (
                 // Dashboard SECTION
-                <section className="h-100" id="dashboard"> 
+                <section className="h-100" id="dashboard">
                     <Container fluid>
                         <Row>
-                            <SideNavbar currentUrl={currentUrl} logout={this.logout}/>
-                            <Dashboard  logout={this.logout}/>
+                            <SideNavbar currentUrl={currentUrl} logout={this.logout} />
+                            <Dashboard />
                         </Row>
                     </Container>
                 </section>
             )
         }
-        else{
-            return <Redirect to='/login'/>;
+        else {
+            return <Redirect to='/login' />;
         }
 
     }

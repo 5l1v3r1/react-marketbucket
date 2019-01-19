@@ -11,6 +11,7 @@ import ShopeeShop from './pages/ShopeeShop';
 import Home from './pages/Home';
 import AddProductsFormLazada from './pages/AddProductsFormLazada';
 import AddProductsFormShopee from './pages/AddProductsFormShopee';
+import Settings from './pages/Settings';
 
 library.add(faPlus, faIgloo, faGoogle, faStore, faParachuteBox)
 
@@ -52,6 +53,11 @@ class App extends Component {
           <Route path="/shopee/new"
             component={props =>
               <AddProductsFormShopee {...props} />
+            }>
+          </Route>
+          <Route path="/settings"
+            component={props =>
+              <Settings {...props} />
             }>
           </Route>
         </Switch>

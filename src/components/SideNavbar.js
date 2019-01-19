@@ -20,26 +20,29 @@ export default class SideNavbar extends Component {
                 </span>
               </Link>
             </NavItem>
-            <NavItem className={`${currentUrl === '/lazada/shop' ? 'bg-primary' : ''}`} >
-              <Link to={'/lazada/shop'} className={`nav-link ${currentUrl === '/lazada/shop' ? 'text-white' : ''}`}>
+            {localStorage.lazadaToken !== "null" ?
+              <NavItem className={`${currentUrl === '/lazada/shop' ? 'bg-primary' : ''}`} >
+                <Link to={'/lazada/shop'} className={`nav-link ${currentUrl === '/lazada/shop' ? 'text-white' : ''}`}>
+                  <span data-feather="home"></span>
+                  Lazada<span className="sr-only">(current)
+                </span>
+                </Link>
+              </NavItem> : null}
+            {localStorage.shopeeShopId !== "null" ?
+              <NavItem className={`${currentUrl === '/shopee/shop' ? 'bg-primary' : ''}`} >
+                <Link to={'/shopee/shop'} className={`nav-link ${currentUrl === '/shopee/shop' ? 'text-white' : ''}`}>
+                  <span data-feather="home"></span>
+                  Shopee<span className="sr-only">(current)
+                </span>
+                </Link>
+              </NavItem> : null}
+            <NavItem className={`${currentUrl === '/settings' ? 'bg-primary' : ''}`} >
+              <Link to={'/settings'} className={`nav-link ${currentUrl === '/settings' ? 'text-white' : ''}`}>
                 <span data-feather="home"></span>
-                Lazada<span className="sr-only">(current)
+                Settings<span className="sr-only">(current)
                 </span>
               </Link>
             </NavItem>
-            <NavItem className={`${currentUrl === '/shopee/shop' ? 'bg-primary' : ''}`} >
-              <Link to={'/shopee/shop'} className={`nav-link ${currentUrl === '/shopee/shop' ? 'text-white' : ''}`}>
-                <span data-feather="home"></span>
-                Shopee<span className="sr-only">(current)
-                </span>
-              </Link>
-            </NavItem>
-            <h6 className="d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-              <span>Settings</span>
-              <a className="d-flex align-items-center text-muted" href="#">
-                <span data-feather="plus-circle"></span>
-              </a>
-            </h6>
           </Nav>
           <Nav className="flex-column mb-2">
             <NavItem>
