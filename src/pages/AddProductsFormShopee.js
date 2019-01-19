@@ -4,6 +4,7 @@ import { Alert, Container, Col, Row, Form, FormGroup, Input, Button } from 'reac
 import axios from 'axios';
 
 
+
 export default class AddProductsFormShopee extends Component {
   state = {
     tree: null,
@@ -22,6 +23,7 @@ export default class AddProductsFormShopee extends Component {
     price: null,
     quantity: null,
     packageWeight: null,
+    file: null
   }
 
   componentDidMount = () => {
@@ -92,31 +94,35 @@ export default class AddProductsFormShopee extends Component {
 
 
   handleSubmit = (e) => {
-    const { selectedOption3, price, quantity, packageWeight, name, description, selectedAttribute1, selectedAttribute2, selectedAttribute3 } = this.state
+    const { selectedOption3, price, quantity, packageWeight, name, description, selectedAttribute1, selectedAttribute2, selectedAttribute3, file } = this.state
     e.preventDefault()
+    let formData = new FormData()
+    formData.set('id', selectedOption3.id)
+    formData.set('attribute1Id', selectedAttribute1 ? selectedAttribute1.id : {})
+    formData.set('attribute1Value', selectedAttribute1 ? selectedAttribute1.value : {})
+    formData.set('attribute2Id', selectedAttribute2 ? selectedAttribute2.id : {})
+    formData.set('attribute2Value', selectedAttribute2 ? selectedAttribute2.value : {})
+    formData.set('attribute3Id', selectedAttribute3 ? selectedAttribute3.id : {})
+    formData.set('attribute3Value', selectedAttribute3 ? selectedAttribute3.value : {})
+    formData.set('name', name)
+    formData.set('description', description)
+    formData.set('price', price)
+    formData.set('quantity', quantity)
+    formData.set('package_weight', packageWeight)
+    formData.append('image', file)
 
+    debugger
     axios({
       method: 'post',
       url: 'http://127.0.0.1:5000/api/v1/products/shopee/new',
       headers: {
-        'content-type': 'application/json',
+        'content-type': 'multipart/form-data',
         'authorization': `Bearer ${localStorage.jwt}`
       },
-      data: {
-        id: selectedOption3.id,
-        attribute1: selectedAttribute1 ? { attributes_id: selectedAttribute1.id, value: selectedAttribute1.value } : {},
-        attribute2: selectedAttribute2 ? { attributes_id: selectedAttribute2.id, value: selectedAttribute2.value } : {},
-        attribute3: selectedAttribute3 ? { attributes_id: selectedAttribute3.id, value: selectedAttribute3.value } : {},
-        name: name,
-        description: description,
-        price: price,
-        quantity: quantity,
-        package_weight: packageWeight,
-      }
+      data: formData
     })
       .then(response => {
         const { data } = response;
-
         this.setState({})
       })
       .catch(error => {
@@ -149,7 +155,10 @@ export default class AddProductsFormShopee extends Component {
       })
     }
   }
-
+  getImage = (event) => {
+    const file = event.target.files[0]
+    this.setState({ file })
+  }
 
   render() {
     return (
@@ -248,6 +257,7 @@ export default class AddProductsFormShopee extends Component {
                   className=""
                   name="image"
                   type='file'
+                  onChange={this.getImage}
                   placeholder="Upload Image"
                   required
                 />
