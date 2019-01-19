@@ -34,12 +34,13 @@ export default class SideNavbar extends Component {
                 </span>
               </Link>
             </NavItem>
-            <h6 className="d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-              <span>Settings</span>
-              <a className="d-flex align-items-center text-muted" href="#">
-                <span data-feather="plus-circle"></span>
-              </a>
-            </h6>
+            <NavItem className={`${currentUrl === '/settings' ? 'bg-primary' : ''}`} >
+              <Link to={'/settings'} className={`nav-link ${currentUrl === '/settings' ? 'text-white' : ''}`}>
+                <span data-feather="home"></span>
+                Settings<span className="sr-only">(current)
+                </span>
+              </Link>
+            </NavItem>
           </Nav>
           <Nav className="flex-column mb-2">
             <NavItem>

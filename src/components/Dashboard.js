@@ -92,7 +92,7 @@ export default class Dashboard extends React.Component {
             <div className='card-img-top border-bottom text-center pb-2'><FontAwesomeIcon icon="store" size="7x" /></div>
             <CardBody>
               <CardTitle className='text-center'><b>Add a marketplace</b></CardTitle>
-              <CardText className='text-left'>Choose the marketplace you would like to add and enter your credentials when prompted</CardText>
+              <CardText className='text-left'>Choose the marketplace you would like to add and login when prompted</CardText>
             </CardBody>
           </Card>
         </Col>
