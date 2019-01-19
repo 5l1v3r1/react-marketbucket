@@ -20,20 +20,22 @@ export default class SideNavbar extends Component {
                 </span>
               </Link>
             </NavItem>
-            <NavItem className={`${currentUrl === '/lazada/shop' ? 'bg-primary' : ''}`} >
-              <Link to={'/lazada/shop'} className={`nav-link ${currentUrl === '/lazada/shop' ? 'text-white' : ''}`}>
-                <span data-feather="home"></span>
-                Lazada<span className="sr-only">(current)
+            {localStorage.lazadaToken !== "null" ?
+              <NavItem className={`${currentUrl === '/lazada/shop' ? 'bg-primary' : ''}`} >
+                <Link to={'/lazada/shop'} className={`nav-link ${currentUrl === '/lazada/shop' ? 'text-white' : ''}`}>
+                  <span data-feather="home"></span>
+                  Lazada<span className="sr-only">(current)
                 </span>
-              </Link>
-            </NavItem>
-            <NavItem className={`${currentUrl === '/shopee/shop' ? 'bg-primary' : ''}`} >
-              <Link to={'/shopee/shop'} className={`nav-link ${currentUrl === '/shopee/shop' ? 'text-white' : ''}`}>
-                <span data-feather="home"></span>
-                Shopee<span className="sr-only">(current)
+                </Link>
+              </NavItem> : null}
+            {localStorage.shopeeShopId !== "null" ?
+              <NavItem className={`${currentUrl === '/shopee/shop' ? 'bg-primary' : ''}`} >
+                <Link to={'/shopee/shop'} className={`nav-link ${currentUrl === '/shopee/shop' ? 'text-white' : ''}`}>
+                  <span data-feather="home"></span>
+                  Shopee<span className="sr-only">(current)
                 </span>
-              </Link>
-            </NavItem>
+                </Link>
+              </NavItem> : null}
             <NavItem className={`${currentUrl === '/settings' ? 'bg-primary' : ''}`} >
               <Link to={'/settings'} className={`nav-link ${currentUrl === '/settings' ? 'text-white' : ''}`}>
                 <span data-feather="home"></span>

@@ -19,7 +19,10 @@ export default class SettingsOptions extends Component {
     hasError: false,
     errors: [],
     confirmError: false,
-    message: null
+    message: null,
+    lazada: localStorage.lazadaToken === "null" ? null : localStorage.lazadaToken,
+    shopee: localStorage.shopeeShopId === "null" ? null : localStorage.shopeeShopId,
+    marketplaceName: ""
   };
 
   componentDidMount() {
@@ -64,7 +67,6 @@ export default class SettingsOptions extends Component {
           this.setState({ message, confirmError: false, hasError: false })
         })
         .catch(error => {
-          debugger
           this.setState({ errors: error.response.data.message, hasError: true, confirmError: false })
         });
     } else {
@@ -92,8 +94,37 @@ export default class SettingsOptions extends Component {
     })
   }
 
+  handleDelete = ({ target }) => {
+    const marketplaceName = target.name
+    axios({
+      method: 'delete',
+      url: 'http://127.0.0.1:5000/api/v1/marketplaces/delete',
+      headers: {
+        'content-type': 'application/json',
+        'authorization': `Bearer ${localStorage.jwt}`
+      },
+      data: {
+        marketplace_name: marketplaceName
+      }
+    })
+      .then(response => {
+        const { message } = response.data;
+        if (marketplaceName === 'lazada') {
+          localStorage.removeItem('lazadaToken')
+        } else {
+          localStorage.removeItem('shopeeShopId')
+        }
+        // this.setState({ message, confirmError: false, hasError: false })
+      })
+      .catch(error => {
+        debugger
+        // this.setState({ errors: error.response.data.message, hasError: true, confirmError: false })
+      });
+
+  }
+
   render() {
-    const { user, firstName, lastName, email, storeName, password, passwordConfirm } = this.state
+    const { user, firstName, lastName, email, storeName, password, passwordConfirm, lazada, shopee } = this.state
     return (
       user ?
         <>
@@ -133,8 +164,8 @@ export default class SettingsOptions extends Component {
               <Collapse isOpen={this.state.marketplaceCollapse}>
                 <Form>
                   <Form.Group widths='equal'>
-                    <Button color="red" onClick={this.toggle} style={{ marginBottom: '1rem', width: "50%" }}>DELETE LAZADA</Button>
-                    <Button color="red" onClick={this.toggle} style={{ marginBottom: '1rem', width: "50%" }}>DELETE SHOPEE</Button>
+                    {lazada ? <Button type="button" color="red" name='lazada' onClick={this.handleDelete} style={{ marginBottom: '1rem', width: "50%" }}>DELETE LAZADA</Button> : null}
+                    {shopee ? <Button type="button" color="red" name='shopee' onClick={this.handleDelete} style={{ marginBottom: '1rem', width: "50%" }}>DELETE SHOPEE</Button> : null}
                   </Form.Group>
                 </Form>
               </Collapse>

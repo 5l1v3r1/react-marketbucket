@@ -29,7 +29,7 @@ export default class Settings extends Component {
           <Container fluid>
             <Row>
               <SideNavbar currentUrl={currentUrl} logout={this.logout} />
-              <SettingsOptions logout={this.logout} />
+              <SettingsOptions />
             </Row>
           </Container>
         </section>
