@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { Button, Checkbox, Form } from 'semantic-ui-react'
+import { Button, Form } from 'semantic-ui-react';
 import { Collapse, Col, Alert } from 'reactstrap';
-import { faSleigh } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
+import { Redirect } from 'react-router-dom'
 
 export default class SettingsOptions extends Component {
   state = {
@@ -22,7 +22,8 @@ export default class SettingsOptions extends Component {
     message: null,
     lazada: localStorage.lazadaToken === "null" ? null : localStorage.lazadaToken,
     shopee: localStorage.shopeeShopId === "null" ? null : localStorage.shopeeShopId,
-    marketplaceName: ""
+    marketplaceName: "",
+    redirect: false
   };
 
   componentDidMount() {
@@ -64,6 +65,7 @@ export default class SettingsOptions extends Component {
       })
         .then(response => {
           const { message } = response.data;
+          setTimeout(() => this.setState({ redirect: true }), 3000)
           this.setState({ message, confirmError: false, hasError: false })
         })
         .catch(error => {
@@ -114,65 +116,70 @@ export default class SettingsOptions extends Component {
         } else {
           localStorage.removeItem('shopeeShopId')
         }
-        // this.setState({ message, confirmError: false, hasError: false })
+        setTimeout(() => this.setState({ redirect: true }), 2000)
+        this.setState({ message, hasError: false })
       })
       .catch(error => {
-        debugger
-        // this.setState({ errors: error.response.data.message, hasError: true, confirmError: false })
+        this.setState({ errors: error.response.data.message, hasError: true, confirmError: false })
       });
 
   }
 
   render() {
-    const { user, firstName, lastName, email, storeName, password, passwordConfirm, lazada, shopee } = this.state
-    return (
-      user ?
-        <>
-          <Col md="9" className="d-none d-md-block sidebar mb-auto ml-1 mr-1 mt-5">
+    const { user, firstName, lastName, email, storeName, password, passwordConfirm, lazada, shopee, message, redirect } = this.state
+    if (redirect) {
+      return <Redirect to='/' />;
+    } else {
+      return (
+        user ?
+          <>
+            <Col md="9" className="d-none d-md-block sidebar mb-auto ml-1 mr-1 mt-5">
 
-            <div>
-              <Button onClick={this.toggle} style={{ marginBottom: '1rem', width: "100%" }}>Edit User Details</Button>
-              <Collapse isOpen={this.state.userCollapse}>
-                <Form onSubmit={this.handleSubmit}>
-                  <Form.Input placeholder={user.first_name} value={firstName} label='First Name' onInput={this.handleInput} name='firstName' />
-                  <Form.Input placeholder={user.last_name} value={lastName} label='Last Name' onInput={this.handleInput} name='lastName' />
-                  <Form.Input placeholder={user.email} value={email} label='Email' type='email' onInput={this.handleInput} name='email' />
-                  <Form.Input placeholder={user.store_name} value={storeName} label='Store Name' onInput={this.handleInput} name='storeName' />
-                  <Button type='button' onClick={this.togglePassword} style={{ marginBottom: '1rem', width: "40%" }}>Do you want to change your password?</Button>
-                  <Collapse isOpen={this.state.passwordCollapse}>
+              <div>
+                {message ? <Alert color='info'>{message}</Alert> : null}
+                <Button onClick={this.toggle} style={{ marginBottom: '1rem', width: "100%" }}>Edit User Details</Button>
+                <Collapse isOpen={this.state.userCollapse}>
+                  <Form onSubmit={this.handleSubmit}>
+                    <Form.Input placeholder={user.first_name} value={firstName} label='First Name' onInput={this.handleInput} name='firstName' />
+                    <Form.Input placeholder={user.last_name} value={lastName} label='Last Name' onInput={this.handleInput} name='lastName' />
+                    <Form.Input placeholder={user.email} value={email} label='Email' type='email' onInput={this.handleInput} name='email' />
+                    <Form.Input placeholder={user.store_name} value={storeName} label='Store Name' onInput={this.handleInput} name='storeName' />
+                    <Button type='button' onClick={this.togglePassword} style={{ marginBottom: '1rem', width: "40%" }}>Do you want to change your password?</Button>
+                    <Collapse isOpen={this.state.passwordCollapse}>
+                      <Form.Group widths='equal'>
+                        <Form.Input type='password' value={password} placeholder="Enter New Password" onInput={this.handleInput} name='password' />
+                        <Form.Input type='password' value={passwordConfirm} placeholder="Confirm New Password" onInput={this.handleInput} name='passwordConfirm' />
+                      </Form.Group>
+                      {this.state.confirmError ? <small style={{ color: "red" }}>Passwords don't match</small> : ""}
+                    </Collapse>
+                    <div>
+                      <Button className='mt-2' color='blue' type='submit'>Submit</Button>
+                    </div>
+                  </Form>
+                  {this.state.hasError === true ? this.state.errors.map((errors, index) =>
+                    <div key={index} className="mt-1 ml-0 mr-0 mb-0">
+                      <small>
+                        <Alert color='danger'>{errors}</Alert>
+                      </small>
+                    </div>)
+                    : ''}
+                </Collapse>
+              </div>
+              <div className='mt-5'>
+                <Button onClick={this.toggle} style={{ marginBottom: '1rem', width: "100%" }}>Marketplace Settings</Button>
+                <Collapse isOpen={this.state.marketplaceCollapse}>
+                  <Form>
                     <Form.Group widths='equal'>
-                      <Form.Input type='password' value={password} placeholder="Enter New Password" onInput={this.handleInput} name='password' />
-                      <Form.Input type='password' value={passwordConfirm} placeholder="Confirm New Password" onInput={this.handleInput} name='passwordConfirm' />
+                      {lazada ? <Button type="button" color="red" name='lazada' onClick={this.handleDelete} style={{ marginBottom: '1rem', width: "50%" }}>DELETE LAZADA</Button> : null}
+                      {shopee ? <Button type="button" color="red" name='shopee' onClick={this.handleDelete} style={{ marginBottom: '1rem', width: "50%" }}>DELETE SHOPEE</Button> : null}
                     </Form.Group>
-                    {this.state.confirmError ? <small style={{ color: "red" }}>Passwords don't match</small> : ""}
-                  </Collapse>
-                  <div>
-                    <Button className='mt-2' color='blue' type='submit'>Submit</Button>
-                  </div>
-                </Form>
-                {this.state.hasError === true ? this.state.errors.map((errors, index) =>
-                  <div key={index} className="mt-1 ml-0 mr-0 mb-0">
-                    <small>
-                      <Alert color='danger'>{errors}</Alert>
-                    </small>
-                  </div>)
-                  : ''}
-              </Collapse>
-            </div>
-            <div className='mt-5'>
-              <Button onClick={this.toggle} style={{ marginBottom: '1rem', width: "100%" }}>Marketplace Settings</Button>
-              <Collapse isOpen={this.state.marketplaceCollapse}>
-                <Form>
-                  <Form.Group widths='equal'>
-                    {lazada ? <Button type="button" color="red" name='lazada' onClick={this.handleDelete} style={{ marginBottom: '1rem', width: "50%" }}>DELETE LAZADA</Button> : null}
-                    {shopee ? <Button type="button" color="red" name='shopee' onClick={this.handleDelete} style={{ marginBottom: '1rem', width: "50%" }}>DELETE SHOPEE</Button> : null}
-                  </Form.Group>
-                </Form>
-              </Collapse>
-            </div>
-          </Col>
-        </> : <Col md='3' className='mb-5 ml-5 mr-auto mt-5'><Alert color='info'>Loading...</Alert></Col>
-    );
+                  </Form>
+                </Collapse>
+              </div>
+            </Col>
+          </> : <Col md='3' className='mb-5 ml-5 mr-auto mt-5'><Alert color='info'>Loading...</Alert></Col>
+      )
+    };
   }
 }
 

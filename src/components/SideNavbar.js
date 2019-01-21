@@ -20,7 +20,7 @@ export default class SideNavbar extends Component {
                 </span>
               </Link>
             </NavItem>
-            {localStorage.lazadaToken !== "null" ?
+            {localStorage.lazadaToken && localStorage.lazadaToken !== "null" ?
               <NavItem className={`${currentUrl === '/lazada/shop' ? 'bg-primary' : ''}`} >
                 <Link to={'/lazada/shop'} className={`nav-link ${currentUrl === '/lazada/shop' ? 'text-white' : ''}`}>
                   <span data-feather="home"></span>
@@ -28,7 +28,7 @@ export default class SideNavbar extends Component {
                 </span>
                 </Link>
               </NavItem> : null}
-            {localStorage.shopeeShopId !== "null" ?
+            {localStorage.shopeeShopId && localStorage.shopeeShopId !== "null" ?
               <NavItem className={`${currentUrl === '/shopee/shop' ? 'bg-primary' : ''}`} >
                 <Link to={'/shopee/shop'} className={`nav-link ${currentUrl === '/shopee/shop' ? 'text-white' : ''}`}>
                   <span data-feather="home"></span>

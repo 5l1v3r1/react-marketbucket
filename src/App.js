@@ -9,13 +9,14 @@ import { faGoogle } from '@fortawesome/free-brands-svg-icons'
 import LazadaShop from './pages/LazadaShop';
 import ShopeeShop from './pages/ShopeeShop';
 import Home from './pages/Home';
-import AddProductsFormLazada from './pages/AddProductsFormLazada';
-import AddProductsFormShopee from './pages/AddProductsFormShopee';
 import Settings from './pages/Settings';
+import LazadaAddProducts from './pages/LazadaAddProducts';
+import ShopeeAddProducts from './pages/ShopeeAddProducts';
 
 library.add(faPlus, faIgloo, faGoogle, faStore, faParachuteBox)
 
 class App extends Component {
+
   render() {
     return (
       <Fragment>
@@ -42,7 +43,7 @@ class App extends Component {
           </Route>
           <Route path="/lazada/new"
             component={props =>
-              <AddProductsFormLazada {...props} />
+              <LazadaAddProducts {...props} />
             }>
           </Route>
           <Route path="/shopee/shop"
@@ -52,7 +53,7 @@ class App extends Component {
           </Route>
           <Route path="/shopee/new"
             component={props =>
-              <AddProductsFormShopee {...props} />
+              <ShopeeAddProducts {...props} />
             }>
           </Route>
           <Route path="/settings"

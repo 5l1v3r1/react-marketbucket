@@ -163,114 +163,110 @@ export default class AddProductsFormShopee extends Component {
   render() {
     return (
 
-      <Container fluid className="h-100">
-        <Row className="h-100">
-          <Col md="12" className="h-100 d-flex align-items-start flex-column" >
-            <Form className="m-auto w-100 p-5" onSubmit={this.handleSubmit}>
-              <FormGroup>
+      <Col md="9" className="h-100 d-flex align-items-start flex-column" >
+        <Form className="m-auto w-100 p-5" onSubmit={this.handleSubmit}>
+          <FormGroup>
+            <Select
+              name="category"
+              value={this.state.selectedOption1}
+              onChange={this.handleChange1}
+              options={this.state.options1.map((option) => ({ label: option.category_name, value: option.category_name, id: option.category_id }))}
+              placeholder={'Target Category'}
+              required
+            />
+            {this.state.options2 ?
+              <>
+                <br />
                 <Select
-                  name="category"
-                  value={this.state.selectedOption1}
-                  onChange={this.handleChange1}
-                  options={this.state.options1.map((option) => ({ label: option.category_name, value: option.category_name, id: option.category_id }))}
-                  placeholder={'Target Category'}
-                  required
-                />
-                {this.state.options2 ?
-                  <>
-                    <br />
-                    <Select
-                      className=""
-                      name="sub-category"
-                      value={this.state.selectedOption2}
-                      onChange={this.handleChange2}
-                      options={this.state.options2}
-                      placeholder="Sub-Category"
-                      required />
-                  </> : null}
-                {this.state.options3 ?
-                  <>
-                    <br />
-                    <Select
-                      className=""
-                      name="sub-sub-category"
-                      value={this.state.selectedOption3}
-                      onChange={this.handleChange3}
-                      options={this.state.options3}
-                      placeholder="Leaf Category"
-                      required />
-                  </> : null}
-                {this.state.attributeFields ? this.state.attributeFields.map((attributeField, index) =>
-                  <Fragment key={index}>
-                    <br />
-                    <Select
-                      className=""
-                      name={attributeField.attribute_name}
-                      value={index == 0 ? this.state.selectedAttribute1 : index == 1 ? this.state.selectedAttribute2 : this.stateselectedAttribute3}
-                      onChange={this.handleInput}
-                      options={attributeField.options.map((option) => ({ label: option, value: option, name: `attribute${index + 1}`, id: attributeField.attribute_id }))}
-                      placeholder={attributeField.attribute_name}
-                      required />
-                  </Fragment>) : null}
-                <br />
-                <Input onInput={this.handleInput}
                   className=""
-                  name="name"
-                  placeholder="Product Name"
-                  required
-                />
+                  name="sub-category"
+                  value={this.state.selectedOption2}
+                  onChange={this.handleChange2}
+                  options={this.state.options2}
+                  placeholder="Sub-Category"
+                  required />
+              </> : null}
+            {this.state.options3 ?
+              <>
                 <br />
-                <Input onInput={this.handleInput}
+                <Select
                   className=""
-                  name="description"
-                  placeholder="Description"
-                  required
-                /> {this.state.description && this.state.description.length < 20 ? <span className='text-danger'>must be > 20</span> : null}
+                  name="sub-sub-category"
+                  value={this.state.selectedOption3}
+                  onChange={this.handleChange3}
+                  options={this.state.options3}
+                  placeholder="Leaf Category"
+                  required />
+              </> : null}
+            {this.state.attributeFields ? this.state.attributeFields.map((attributeField, index) =>
+              <Fragment key={index}>
                 <br />
-                <Input onInput={this.handleInput}
+                <Select
                   className=""
-                  name="price"
-                  type='number'
-                  step="0.01"
-                  placeholder="Price (MYR)"
-                  required
-                />
-                <br />
-                <Input onInput={this.handleInput}
-                  className=""
-                  name="quantity"
-                  type='number'
-                  placeholder="Quantity"
-                  required
-                />
-                <br />
-                <Input onInput={this.handleInput}
-                  className=""
-                  name="packageWeight"
-                  type='number'
-                  step="0.01"
-                  placeholder="Package Weight (Kg)"
-                  required
-                />
-                <br />
-                <Input
-                  className=""
-                  name="image"
-                  type='file'
-                  onChange={this.getImage}
-                  placeholder="Upload Image"
-                  required
-                />
-                <div className="d-flex flex-row mt-3">
-                  <Button className="btn btn-danger" value="submit" type="submit">
-                    Send Product!
+                  name={attributeField.attribute_name}
+                  value={index == 0 ? this.state.selectedAttribute1 : index == 1 ? this.state.selectedAttribute2 : this.stateselectedAttribute3}
+                  onChange={this.handleInput}
+                  options={attributeField.options.map((option) => ({ label: option, value: option, name: `attribute${index + 1}`, id: attributeField.attribute_id }))}
+                  placeholder={attributeField.attribute_name}
+                  required />
+              </Fragment>) : null}
+            <br />
+            <Input onInput={this.handleInput}
+              className=""
+              name="name"
+              placeholder="Product Name"
+              required
+            />
+            <br />
+            <Input onInput={this.handleInput}
+              className=""
+              name="description"
+              placeholder="Description"
+              required
+            /> {this.state.description && this.state.description.length < 20 ? <span className='text-danger'>must be > 20</span> : null}
+            <br />
+            <Input onInput={this.handleInput}
+              className=""
+              name="price"
+              type='number'
+              step="0.01"
+              placeholder="Price (MYR)"
+              required
+            />
+            <br />
+            <Input onInput={this.handleInput}
+              className=""
+              name="quantity"
+              type='number'
+              placeholder="Quantity"
+              required
+            />
+            <br />
+            <Input onInput={this.handleInput}
+              className=""
+              name="packageWeight"
+              type='number'
+              step="0.01"
+              placeholder="Package Weight (Kg)"
+              required
+            />
+            <br />
+            <Input
+              className=""
+              name="image"
+              type='file'
+              onChange={this.getImage}
+              placeholder="Upload Image"
+              required
+            />
+            <div className="d-flex flex-row mt-3">
+              <Button className="btn btn-danger" value="submit" type="submit">
+                Send Product!
                     </Button>
-                </div>
-              </FormGroup>
-            </Form>
-          </Col>
-        </Row>
-      </Container>
+            </div>
+          </FormGroup>
+        </Form>
+      </Col>
     );
   }
 }

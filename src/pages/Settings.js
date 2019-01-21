@@ -17,7 +17,6 @@ export default class Settings extends Component {
     localStorage.removeItem('lazadaToken')
     localStorage.removeItem('lazadaRefresh')
     localStorage.removeItem('shopeeShopId')
-    // this.forceUpdate()
   }
 
   render() {
