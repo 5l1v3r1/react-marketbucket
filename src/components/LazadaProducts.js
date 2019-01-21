@@ -1,8 +1,8 @@
 import axios from "axios";
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import {
   Card, CardImg, CardText, CardBody, Alert,
-  CardTitle, CardSubtitle, Button, Row, Col,
+  CardTitle, CardSubtitle, Col,
   CardLink, CardHeader, CardFooter
 } from 'reactstrap';
 import AddProducts from "./AddProducts";

@@ -1,0 +1,31 @@
+payload: `
+        <?xml version=\"1.0\" encoding=\"UTF-8\" ?> <Request>
+            <Product>
+                <PrimaryCategory>${primaryCategoryId}</PrimaryCategory>
+                <SPUId></SPUId>         <AssociatedSku></AssociatedSku>
+                <Attributes>
+                    <name>${name}</name>
+                    <short_description>${description}</short_description>
+                    <SellerSku>MarketBucket-create-${time}</SellerSku>
+                    <warranty_type>No Warranty</warranty_type>
+                    <brand>${brand}</brand>
+                    <tax_class>default</tax_class>
+                    <model>asdf</model>
+                </Attributes>
+                <Skus>
+                    <Sku>
+                        <SellerSku>MarketBucket-create-${time}</SellerSku>
+                        <price>${price}</price>
+                        <quantity>${quantity}</quantity>
+                        <package_content>${packageContent}</package_content>
+                        <package_weight>${packageWeight}</package_weight>
+                        <package_length>${packageLength}</package_length>
+                        <package_width>${packageWidth}</package_width>
+                        <package_height>${packageHeight}</package_height>
+                        <Images>
+                        <Image></Image> 
+                        </Images>
+                    </Sku>
+                </Skus>
+            </Product>
+        </Request>`

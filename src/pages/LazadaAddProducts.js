@@ -2,11 +2,11 @@ import React, { Component } from 'react'
 import SideNavbar from '../components/SideNavbar';
 import { Container, Row } from 'reactstrap'
 import { Redirect } from 'react-router-dom'
-import LazadaProducts from '../components/LazadaProducts';
+import AddProductsFormLazada from '../components/AddProductsFormLazada';
 import ErrorHandler from './Error';
 
 
-export default class LazadaShop extends Component {
+export default class LazadaAddProducts extends Component {
     state = {
         currentUrl: this.props.match.path
     }
@@ -24,12 +24,12 @@ export default class LazadaShop extends Component {
         if (localStorage.getItem('jwt')) {
             if (localStorage.getItem('lazadaToken') && localStorage.getItem('lazadaToken') !== 'null') {
                 return (
-                    // Lazada Shop SECTION
-                    <section className="h-100" id="lazada-shop">
+                    // Lazada add products SECTION
+                    <section className="h-100" id="lazada-new-product">
                         <Container fluid>
                             <Row className='d-flex'>
                                 <SideNavbar currentUrl={currentUrl} logout={this.logout} />
-                                <LazadaProducts />
+                                <AddProductsFormLazada />
                             </Row>
                         </Container>
                     </section>
