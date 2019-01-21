@@ -44,7 +44,7 @@ export default class AddProductsFormLazada extends Component {
   componentDidMount = () => {
     axios({
       method: 'get',
-      url: 'http://127.0.0.1:5000/api/v1/products/lazada/tree',
+      url: 'https://marketbucket.herokuapp.com/api/v1/products/lazada/tree',
       headers: {
         'content-type': 'application/json',
         'authorization': `Bearer ${localStorage.jwt}`
@@ -142,7 +142,7 @@ export default class AddProductsFormLazada extends Component {
 
     axios({
       method: 'post',
-      url: 'http://127.0.0.1:5000/api/v1/products/lazada/new',
+      url: 'https://marketbucket.herokuapp.com/api/v1/products/lazada/new',
       headers: {
         'content-type': 'multipart/form-data',
         'authorization': `Bearer ${localStorage.jwt}`

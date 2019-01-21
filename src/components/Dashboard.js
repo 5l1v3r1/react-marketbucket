@@ -30,7 +30,7 @@ export default class Dashboard extends React.Component {
     if (this.state.lazadaCode && !this.state.lazada) {
       axios({
         method: 'post',
-        url: 'http://127.0.0.1:5000/api/v1/marketplaces/authorize/lazada',
+        url: 'https://marketbucket.herokuapp.com/api/v1/marketplaces/authorize/lazada',
         headers: {
           'content-type': 'application/json',
           'authorization': `Bearer ${localStorage.jwt}`
@@ -60,7 +60,7 @@ export default class Dashboard extends React.Component {
     } else if (this.state.shopeeShopId && !this.state.shopee) {
       axios({
         method: 'post',
-        url: 'http://127.0.0.1:5000/api/v1/marketplaces/authorize/shopee',
+        url: 'https://marketbucket.herokuapp.com/api/v1/marketplaces/authorize/shopee',
         headers: {
           'content-type': 'application/json',
           'authorization': `Bearer ${localStorage.jwt}`

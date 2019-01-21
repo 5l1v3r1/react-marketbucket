@@ -34,7 +34,7 @@ export default class AddProductsFormShopee extends Component {
   componentDidMount = () => {
     axios({
       method: 'get',
-      url: 'http://127.0.0.1:5000/api/v1/products/shopee/tree',
+      url: 'https://marketbucket.herokuapp.com/api/v1/products/shopee/tree',
       headers: {
         'content-type': 'application/json',
         'authorization': `Bearer ${localStorage.jwt}`
@@ -81,7 +81,7 @@ export default class AddProductsFormShopee extends Component {
     console.log(`Option3 selected:`, selectedOption3);
     axios({
       method: 'post',
-      url: 'http://127.0.0.1:5000/api/v1/products/shopee/attributes',
+      url: 'https://marketbucket.herokuapp.com/api/v1/products/shopee/attributes',
       headers: {
         'content-type': 'application/json',
         'authorization': `Bearer ${localStorage.jwt}`
@@ -118,7 +118,7 @@ export default class AddProductsFormShopee extends Component {
 
     axios({
       method: 'post',
-      url: 'http://127.0.0.1:5000/api/v1/products/shopee/new',
+      url: 'https://marketbucket.herokuapp.com/api/v1/products/shopee/new',
       headers: {
         'content-type': 'multipart/form-data',
         'authorization': `Bearer ${localStorage.jwt}`

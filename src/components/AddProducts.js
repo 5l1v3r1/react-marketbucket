@@ -29,7 +29,7 @@ export default class AddProducts extends React.Component {
                 <hr /> </>}
               {!shopee || !lazada ? null :
                 <li>
-                  <a href="http://localhost:5000/api/v1/marketplaces/check/shopee">
+                  <a href="https://marketbucket.herokuapp.com/api/v1/marketplaces/check/shopee">
                     <img height="100px" src="https://s3.amazonaws.com/market.bucket/image.jpg" alt="all marketplaces" />
                   </a>
                 </li>

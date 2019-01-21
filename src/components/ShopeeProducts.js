@@ -26,7 +26,7 @@ export default class LazadaProducts extends Component {
   componentDidMount = () => {
     axios({
       method: 'get',
-      url: 'http://127.0.0.1:5000/api/v1/products/shopee',
+      url: 'https://marketbucket.herokuapp.com/api/v1/products/shopee',
       headers: {
         'content-type': 'application/json',
         'authorization': `Bearer ${localStorage.jwt}`

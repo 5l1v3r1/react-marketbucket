@@ -29,7 +29,7 @@ export default class Login extends Component {
         e.preventDefault()
         const validateEmail = EmailValidator.validate(this.state.email)
         if (validateEmail) {
-            axios.post('http://localhost:5000/api/v1/login', {
+            axios.post('https://marketbucket.herokuapp.com/api/v1/login', {
                 email: this.state.email,
                 password: this.state.password
             })
@@ -74,7 +74,7 @@ export default class Login extends Component {
             const { email } = googleProfile
             axios({
                 method: 'post',
-                url: 'http://127.0.0.1:5000/api/v1/authorize/google',
+                url: 'https://marketbucket.herokuapp.com/api/v1/authorize/google',
                 headers: {
                     'content-type': 'application/json',
                 },

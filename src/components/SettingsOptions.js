@@ -29,7 +29,7 @@ export default class SettingsOptions extends Component {
   componentDidMount() {
     axios({
       method: 'get',
-      url: 'http://127.0.0.1:5000/api/v1/users/me',
+      url: 'https://marketbucket.herokuapp.com/api/v1/users/me',
       headers: {
         'content-type': 'application/json',
         'authorization': `Bearer ${localStorage.jwt}`
@@ -50,7 +50,7 @@ export default class SettingsOptions extends Component {
     if (password === passwordConfirm) {
       axios({
         method: 'put',
-        url: 'http://127.0.0.1:5000/api/v1/users/update',
+        url: 'https://marketbucket.herokuapp.com/api/v1/users/update',
         headers: {
           'content-type': 'application/json',
           'authorization': `Bearer ${localStorage.jwt}`
@@ -100,7 +100,7 @@ export default class SettingsOptions extends Component {
     const marketplaceName = target.name
     axios({
       method: 'delete',
-      url: 'http://127.0.0.1:5000/api/v1/marketplaces/delete',
+      url: 'https://marketbucket.herokuapp.com/api/v1/marketplaces/delete',
       headers: {
         'content-type': 'application/json',
         'authorization': `Bearer ${localStorage.jwt}`
