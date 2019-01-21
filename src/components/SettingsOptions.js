@@ -65,7 +65,7 @@ export default class SettingsOptions extends Component {
       })
         .then(response => {
           const { message } = response.data;
-          setTimeout(() => this.setState({ redirect: true }), 3000)
+          setTimeout(() => this.setState({ redirect: true }), 2000)
           this.setState({ message, confirmError: false, hasError: false })
         })
         .catch(error => {
@@ -179,7 +179,7 @@ export default class SettingsOptions extends Component {
             </Col>
           </> : <Col md='3' className='mb-5 ml-5 mr-auto mt-5'><Alert color='info'>Loading...</Alert></Col>
       )
-    };
+    }
   }
 }
 

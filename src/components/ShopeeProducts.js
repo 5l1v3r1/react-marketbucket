@@ -1,8 +1,8 @@
 import axios from "axios";
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import {
   Card, CardImg, CardText, CardBody, Alert,
-  CardTitle, CardSubtitle, Button, Row, Col,
+  CardTitle, CardSubtitle, Col,
   CardLink, CardHeader, CardFooter
 } from 'reactstrap';
 import AddProducts from "./AddProducts";
@@ -70,7 +70,7 @@ export default class LazadaProducts extends Component {
                 <CardImg className='border-bottom' top width="100%" src={product.images[0]} alt="Card image cap" />
                 <CardBody>
                   {/* <CardText className='text-left'><span dangerouslySetInnerHTML={{ __html: product.attributes.short_description }} /></CardText> */}
-                  <CardText><span className='mr-5'>Price : {product.price} MYR</span><span className='ml-5'>Stock : {product.stock}</span></CardText>
+                  <CardText><span className='mr-4'>Price : {product.price} MYR</span><span className='ml-4'>Stock : {product.stock}</span></CardText>
                 </CardBody>
                 <CardFooter>
                   <CardLink className='mr-5' href={`https://shopee.com.my/${product.name.replace(" ", "-")}-i.${shopee}.${product.item_id}`} target="_blank" rel="noopener noreferrer">Product's Page</CardLink>

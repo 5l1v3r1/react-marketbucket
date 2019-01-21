@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import SideNavbar from '../components/SideNavbar';
 import { Container, Row } from 'reactstrap'
-import { Link, Redirect } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 import AddProductsFormLazada from '../components/AddProductsFormLazada';
 import ErrorHandler from './Error';
 
@@ -17,7 +17,6 @@ export default class LazadaAddProducts extends Component {
         localStorage.removeItem('lazadaToken')
         localStorage.removeItem('lazadaRefresh')
         localStorage.removeItem('shopeeShopId')
-        // this.forceUpdate()
     }
 
     render() {

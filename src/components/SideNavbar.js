@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Col, Nav, NavItem, DropdownItem } from 'reactstrap'
+import { Col, Nav, NavItem } from 'reactstrap'
 import { Link } from 'react-router-dom'
 
 

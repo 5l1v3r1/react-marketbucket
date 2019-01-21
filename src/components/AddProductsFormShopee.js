@@ -1,8 +1,8 @@
 import React, { Component, Fragment } from 'react';
 import Select from 'react-select'
-import { Alert, Container, Col, Row, Form, FormGroup, Input, Button } from 'reactstrap'
+import { Alert, Col, Form, FormGroup, Input, Button } from 'reactstrap'
 import axios from 'axios';
-
+import { Redirect } from 'react-router-dom'
 
 
 export default class AddProductsFormShopee extends Component {
@@ -23,7 +23,12 @@ export default class AddProductsFormShopee extends Component {
     price: null,
     quantity: null,
     packageWeight: null,
-    file: null
+    file: null,
+    message: null,
+    redirect: false,
+    errors: [],
+    hasError: false,
+    isLoading: false
   }
 
   componentDidMount = () => {
@@ -98,12 +103,12 @@ export default class AddProductsFormShopee extends Component {
     e.preventDefault()
     let formData = new FormData()
     formData.set('id', selectedOption3.id)
-    formData.set('attribute1Id', selectedAttribute1 ? selectedAttribute1.id : {})
-    formData.set('attribute1Value', selectedAttribute1 ? selectedAttribute1.value : {})
-    formData.set('attribute2Id', selectedAttribute2 ? selectedAttribute2.id : {})
-    formData.set('attribute2Value', selectedAttribute2 ? selectedAttribute2.value : {})
-    formData.set('attribute3Id', selectedAttribute3 ? selectedAttribute3.id : {})
-    formData.set('attribute3Value', selectedAttribute3 ? selectedAttribute3.value : {})
+    formData.set('attribute1Id', selectedAttribute1 ? selectedAttribute1.id : '')
+    formData.set('attribute1Value', selectedAttribute1 ? selectedAttribute1.value : '')
+    formData.set('attribute2Id', selectedAttribute2 ? selectedAttribute2.id : '')
+    formData.set('attribute2Value', selectedAttribute2 ? selectedAttribute2.value : '')
+    formData.set('attribute3Id', selectedAttribute3 ? selectedAttribute3.id : '')
+    formData.set('attribute3Value', selectedAttribute3 ? selectedAttribute3.value : '')
     formData.set('name', name)
     formData.set('description', description)
     formData.set('price', price)
@@ -111,7 +116,6 @@ export default class AddProductsFormShopee extends Component {
     formData.set('package_weight', packageWeight)
     formData.append('image', file)
 
-    debugger
     axios({
       method: 'post',
       url: 'http://127.0.0.1:5000/api/v1/products/shopee/new',
@@ -123,10 +127,13 @@ export default class AddProductsFormShopee extends Component {
     })
       .then(response => {
         const { data } = response;
-        this.setState({})
+        const { message } = data
+        setTimeout(() => this.setState({ redirect: true }), 2000)
+        this.setState({ message, hasError: false, isLoading:true })
       })
+
       .catch(error => {
-        console.log(error)
+        this.setState({ errors: error.response.data.message, hasError: true, isLoading: false })
       });
   }
 
@@ -161,112 +168,124 @@ export default class AddProductsFormShopee extends Component {
   }
 
   render() {
-    return (
+    const { message, redirect, hasError, errors, isLoading } = this.state
+    if (redirect) {
+      return <Redirect to='/' />;
+    } else {
+      return (
 
-      <Col md="9" className="h-100 d-flex align-items-start flex-column" >
-        <Form className="m-auto w-100 p-5" onSubmit={this.handleSubmit}>
-          <FormGroup>
-            <Select
-              name="category"
-              value={this.state.selectedOption1}
-              onChange={this.handleChange1}
-              options={this.state.options1.map((option) => ({ label: option.category_name, value: option.category_name, id: option.category_id }))}
-              placeholder={'Target Category'}
-              required
-            />
-            {this.state.options2 ?
-              <>
-                <br />
-                <Select
-                  className=""
-                  name="sub-category"
-                  value={this.state.selectedOption2}
-                  onChange={this.handleChange2}
-                  options={this.state.options2}
-                  placeholder="Sub-Category"
-                  required />
-              </> : null}
-            {this.state.options3 ?
-              <>
-                <br />
-                <Select
-                  className=""
-                  name="sub-sub-category"
-                  value={this.state.selectedOption3}
-                  onChange={this.handleChange3}
-                  options={this.state.options3}
-                  placeholder="Leaf Category"
-                  required />
-              </> : null}
-            {this.state.attributeFields ? this.state.attributeFields.map((attributeField, index) =>
-              <Fragment key={index}>
-                <br />
-                <Select
-                  className=""
-                  name={attributeField.attribute_name}
-                  value={index == 0 ? this.state.selectedAttribute1 : index == 1 ? this.state.selectedAttribute2 : this.stateselectedAttribute3}
-                  onChange={this.handleInput}
-                  options={attributeField.options.map((option) => ({ label: option, value: option, name: `attribute${index + 1}`, id: attributeField.attribute_id }))}
-                  placeholder={attributeField.attribute_name}
-                  required />
-              </Fragment>) : null}
-            <br />
-            <Input onInput={this.handleInput}
-              className=""
-              name="name"
-              placeholder="Product Name"
-              required
-            />
-            <br />
-            <Input onInput={this.handleInput}
-              className=""
-              name="description"
-              placeholder="Description"
-              required
-            /> {this.state.description && this.state.description.length < 20 ? <span className='text-danger'>must be > 20</span> : null}
-            <br />
-            <Input onInput={this.handleInput}
-              className=""
-              name="price"
-              type='number'
-              step="0.01"
-              placeholder="Price (MYR)"
-              required
-            />
-            <br />
-            <Input onInput={this.handleInput}
-              className=""
-              name="quantity"
-              type='number'
-              placeholder="Quantity"
-              required
-            />
-            <br />
-            <Input onInput={this.handleInput}
-              className=""
-              name="packageWeight"
-              type='number'
-              step="0.01"
-              placeholder="Package Weight (Kg)"
-              required
-            />
-            <br />
-            <Input
-              className=""
-              name="image"
-              type='file'
-              onChange={this.getImage}
-              placeholder="Upload Image"
-              required
-            />
-            <div className="d-flex flex-row mt-3">
-              <Button className="btn btn-danger" value="submit" type="submit">
-                Send Product!
-                    </Button>
+        <Col md="9" className="h-100 d-flex align-items-start flex-column" >
+          <Form className="m-auto w-100 p-5" onSubmit={this.handleSubmit}>
+          {message ? <Alert color='info'>{message}</Alert> : null}
+          {hasError ? <div className="">
+              <small>
+                <Alert color='danger'>{errors}</Alert>
+              </small>
             </div>
-          </FormGroup>
-        </Form>
-      </Col>
-    );
+            : ''}
+            <FormGroup>
+              <Select
+                name="category"
+                value={this.state.selectedOption1}
+                onChange={this.handleChange1}
+                options={this.state.options1.map((option) => ({ label: option.category_name, value: option.category_name, id: option.category_id }))}
+                placeholder={'Target Category'}
+                required
+              />
+              {this.state.options2 ?
+                <>
+                  <br />
+                  <Select
+                    className=""
+                    name="sub-category"
+                    value={this.state.selectedOption2}
+                    onChange={this.handleChange2}
+                    options={this.state.options2}
+                    placeholder="Sub-Category"
+                    required />
+                </> : null}
+              {this.state.options3 ?
+                <>
+                  <br />
+                  <Select
+                    className=""
+                    name="sub-sub-category"
+                    value={this.state.selectedOption3}
+                    onChange={this.handleChange3}
+                    options={this.state.options3}
+                    placeholder="Leaf Category"
+                    required />
+                </> : null}
+              {this.state.attributeFields ? this.state.attributeFields.map((attributeField, index) =>
+                <Fragment key={index}>
+                  <br />
+                  <Select
+                    className=""
+                    name={attributeField.attribute_name}
+                    value={index === 0 ? this.state.selectedAttribute1 : index === 1 ? this.state.selectedAttribute2 : this.stateselectedAttribute3}
+                    onChange={this.handleInput}
+                    options={attributeField.options.map((option) => ({ label: option, value: option, name: `attribute${index + 1}`, id: attributeField.attribute_id }))}
+                    placeholder={attributeField.attribute_name}
+                    required />
+                </Fragment>) : null}
+              <br />
+              <Input onInput={this.handleInput}
+                className=""
+                name="name"
+                placeholder="Product Name"
+                required
+              />
+              <br />
+              <Input onInput={this.handleInput}
+                className=""
+                name="description"
+                placeholder="Description"
+                required
+              /> {this.state.description && this.state.description.length < 20 ? <span className='text-danger'>must be > 20</span> : null}
+              <br />
+              <Input onInput={this.handleInput}
+                className=""
+                name="price"
+                type='number'
+                step="0.01"
+                placeholder="Price (MYR)"
+                required
+              />
+              <br />
+              <Input onInput={this.handleInput}
+                className=""
+                name="quantity"
+                type='number'
+                placeholder="Quantity"
+                required
+              />
+              <br />
+              <Input onInput={this.handleInput}
+                className=""
+                name="packageWeight"
+                type='number'
+                step="0.01"
+                placeholder="Package Weight (Kg)"
+                required
+              />
+              <br />
+              <Input
+                className=""
+                name="image"
+                type='file'
+                onChange={this.getImage}
+                placeholder="Upload Image"
+                required
+              />
+              <div className="d-flex flex-row mt-3">
+              <Button className="btn btn-danger" value="submit" type="submit" disabled={isLoading?true:false}>
+                  {isLoading ? 'Please Wait...' : 'Send Product!'}
+                    </Button>
+              </div>
+            </FormGroup>
+          </Form>
+        </Col>
+      )
+    }
   }
 }

@@ -1,9 +1,7 @@
 import React, { Component } from 'react'
 import { Container, Row } from 'reactstrap'
 import SideNavbar from '../components/SideNavbar'
-import Dashboard from '../components/Dashboard';
 import { Redirect } from 'react-router-dom'
-import axios from 'axios';
 import SettingsOptions from '../components/SettingsOptions';
 
 export default class Settings extends Component {

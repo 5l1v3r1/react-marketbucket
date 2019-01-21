@@ -5,7 +5,7 @@ import {
 } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Link, Redirect } from 'react-router-dom'
-import AddMarketplace from './AddMarketplace';
+import AddMarketplace from './AddMarketplaceModal';
 import axios from 'axios';
 
 export default class Dashboard extends React.Component {
@@ -136,7 +136,7 @@ export default class Dashboard extends React.Component {
             : null}
         </>
       )
-    };
+    }
   }
 };
 
