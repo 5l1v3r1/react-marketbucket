@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Select from 'react-select'
 import { Alert, Col, Form, FormGroup, Input, Button } from 'reactstrap'
 import axios from 'axios';
-import ColorOptions from '../containers/ColorOptions';
+import ColorOptions from '../containers/colorOptions';
 import BrandOptions from '../containers/BrandsLazada';
 import { Redirect } from 'react-router-dom'
 

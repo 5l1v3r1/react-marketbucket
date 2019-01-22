@@ -173,10 +173,10 @@ export default class Login extends Component {
                                     </small>
                                 </div>
                             </Col>
-                            <Col md="7" className="h-100 d-none d-md-block mt-auto mb-auto" id="login-left-banner" >
+                            <Col md="8" className="h-100 d-none d-md-block mt-auto mb-auto" id="login-left-banner" >
                                 <div className="mb-auto mt-3">
                                     <img className="float-right" src="https://s3.amazonaws.com/market.bucket/1.11556.Screenshot_2019-01-08_at_21.01.12.jpg" alt="logo" height="80vh" />
-                                    <img className="float-right" src="https://s3.amazonaws.com/market.bucket/MARKETPLACE1.png" alt="marketplaces" height="500px" width='100%'/>
+                                    <img className="float-right" src="https://s3.amazonaws.com/market.bucket/MARKETPLACE1.png" alt="marketplaces" height="400px" width='100%'/>
                                 </div>
                             </Col>
                         </Row>
