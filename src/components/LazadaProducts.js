@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { Component } from 'react'
 import {
   Card, CardImg, CardText, CardBody, Alert,
-  CardTitle, CardSubtitle, Col,
+  CardTitle, CardSubtitle, Col, Row,
   CardLink, CardHeader, CardFooter
 } from 'reactstrap';
 import AddProducts from "./AddProducts";
@@ -50,19 +50,19 @@ export default class LazadaProducts extends Component {
     return (
       <>
         {modal ? <AddProducts toggleModal={this.toggleModal} modal={modal} lazada={lazada} shopee={shopee} /> : null}
-        <Col md='3' className='mb-auto ml-auto mr-auto mt-5'>
-          <Card onClick={this.toggleModal} className='btn'>
-            <div className='card-img-top border-bottom text-center pb-2'><FontAwesomeIcon icon="parachute-box" size='9x' /></div>
+        <Col md='9' className=''>
+        {!lazadaProducts ? <Alert color='info' className=''>Loading...</Alert>: null}
+          <Row className=''>
+          <Card onClick={this.toggleModal} className='btn mr-4 ml-4 mt-5 w-25'>
+            <div className='card-img-top border-bottom text-center pb-2'><br/><FontAwesomeIcon icon="parachute-box" size='9x' /></div><br/>
             <CardBody>
               <CardTitle className='text-center'><b>Add a product</b></CardTitle>
               <CardText className='text-left'>Choose the marketplace you would like to add a product to and enter your product details when prompted</CardText>
             </CardBody>
           </Card>
-        </Col>
         {lazadaProducts ?
           lazadaProducts.products.map((product, index) => (
-            <Col md='3' key={index} className='mb-5 ml-5 mr-auto mt-5'>
-              <Card className=''>
+            <Card key={index} className='mr-4 ml-4 mt-5 w-25'>
                 <CardHeader>
                   <CardTitle className='text-center'><b>{product.attributes.name}</b></CardTitle>
                   <CardSubtitle className='text-center'>Brand : {product.attributes.brand}</CardSubtitle>
@@ -77,11 +77,11 @@ export default class LazadaProducts extends Component {
                   <span className='ml-5 text-muted'>Edit</span>
                 </CardFooter>
               </Card>
-            </Col>
           )
           )
-          : <Col md='3' className='mb-5 ml-5 mr-auto mt-5'><Alert color='info'>Loading...</Alert></Col>}
-      </>
+          : null}
+          </Row>
+            </Col></>
     )
   }
 }

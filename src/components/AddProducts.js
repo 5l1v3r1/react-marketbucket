@@ -29,9 +29,9 @@ export default class AddProducts extends React.Component {
                 <hr /> </>}
               {!shopee || !lazada ? null :
                 <li>
-                  <a href="http://localhost:5000/api/v1/marketplaces/check/shopee">
+                  <Link to={'/all/new'}>
                     <img height="100px" src="https://s3.amazonaws.com/market.bucket/image.jpg" alt="all marketplaces" />
-                  </a>
+                  </Link>
                 </li>
               }
             </ul>

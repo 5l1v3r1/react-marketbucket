@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import Select from 'react-select'
-import { Alert, Col, Form, FormGroup, Input, Button } from 'reactstrap'
+import { Alert, Col, FormGroup, Input, Button } from 'reactstrap'
+import { Form } from 'semantic-ui-react';
 import axios from 'axios';
-import ColorOptions from '../containers/colorOptions';
+import ColorOptions from '../containers/ColorOptions';
 import BrandOptions from '../containers/BrandsLazada';
 import { Redirect } from 'react-router-dom'
 
@@ -19,20 +20,14 @@ export default class AddProductsFormLazada extends Component {
     selectedOption2: null,
     selectedOption3: null,
     selectedOption4: null,
-    name: "",
-    description: "",
     brand: null,
     color: null,
     selectedColor: null,
     selectedBrand: null,
-    price: null,
     packageContent: "",
-    quantity: null,
-    packageWeight: null,
     packageLength: null,
     packageWidth: null,
     packageHeight: null,
-    file: null,
     colorOptions: ColorOptions(),
     message: null,
     redirect: false,
@@ -40,6 +35,7 @@ export default class AddProductsFormLazada extends Component {
     hasError: false,
     isLoading: false
   }
+
 
   componentDidMount = () => {
     axios({
@@ -112,7 +108,8 @@ export default class AddProductsFormLazada extends Component {
   }
 
   handleSubmit = (e) => {
-    const { selectedOption1, selectedOption2, selectedOption3, selectedOption4, file, brand, price, quantity, packageContent, packageWeight, packageHeight, packageLength, packageWidth, name, description, color } = this.state
+    const { selectedOption1, selectedOption2, selectedOption3, selectedOption4, brand, packageContent, packageHeight, packageLength, packageWidth, color } = this.state
+    const { price, quantity, packageWeight, name, description, file } = this.props
     e.preventDefault()
     let primaryCategoryId
     if (selectedOption4) {
@@ -153,13 +150,13 @@ export default class AddProductsFormLazada extends Component {
         const { data } = response;
         const { message } = data
         setTimeout(() => this.setState({ redirect: true }), 2000)
-        this.setState({ message, isLoading:true, hasError: false })
+        this.setState({ message, isLoading: true, hasError: false })
       })
 
       .catch(error => {
         const { message } = error.response.data
 
-        this.setState({ errors: message, hasError: true, isLoading:false })
+        this.setState({ errors: message, hasError: true, isLoading: false })
       });
   }
 
@@ -189,30 +186,27 @@ export default class AddProductsFormLazada extends Component {
     }
   }
 
-  getImage = (event) => {
-    const file = event.target.files[0]
-    this.setState({ file })
-  }
-
   render() {
     const { message, redirect, hasError, errors, isLoading } = this.state
+    const { handleSharedInput, getImage, name, price, packageWeight, description, quantity, all } = this.props
     if (redirect) {
       return <Redirect to='/' />;
     } else {
       return (
 
-        <Col md="9" className="h-100 d-flex align-items-start flex-column" >
-          <Form className="m-auto w-100 p-5" onSubmit={this.handleSubmit}>
-          {message ? <Alert color='info'>{message}</Alert> : null}
-          
-          {hasError ?
-            <div className="">
-              <small>
-                <Alert color='danger'>{errors}</Alert>
-              </small>
-            </div>
-            : ''}
+        <Col className="h-100 d-flex align-items-start flex-column mt-5" >
+          <Form className="w-100 p-2" onSubmit={this.handleSubmit}>
+            {message ? <Alert color='info'>{message}</Alert> : null}
+
+            {hasError ?
+              <div className="">
+                <small>
+                  <Alert color='danger'>{errors}</Alert>
+                </small>
+              </div>
+              : ''}
             <FormGroup>
+              <h1>Add Products to Lazada</h1>
               <Select
                 name="category"
                 value={this.state.selectedOption1}
@@ -267,34 +261,38 @@ export default class AddProductsFormLazada extends Component {
                 required
               />
               <br />
-              <Input onInput={this.handleInput}
+              <Input onInput={handleSharedInput}
                 className=""
                 name="name"
                 placeholder="Product Name"
+                defaultValue={name}
                 required
               />
               <br />
-              <Input onInput={this.handleInput}
+              <Input onInput={handleSharedInput}
                 className=""
                 name="description"
                 placeholder="Short Description"
+                value={description}
                 required
               />
               <br />
-              <Input onInput={this.handleInput}
+              <Input onInput={handleSharedInput}
                 className=""
                 name="price"
                 type='number'
                 step="0.01"
+                defaultValue={price}
                 placeholder="Price (MYR)"
                 required
               />
               <br />
-              <Input onInput={this.handleInput}
+              <Input onInput={handleSharedInput}
                 className=""
                 name="quantity"
                 type='number'
                 placeholder="Quantity"
+                value={quantity}
                 required
               />
               <br />
@@ -315,53 +313,56 @@ export default class AddProductsFormLazada extends Component {
                 required
               />
               <br />
-              <Input onInput={this.handleInput}
+              <Input onInput={handleSharedInput}
                 className=""
                 name="packageWeight"
                 type='number'
                 step="0.01"
                 placeholder="Package Weight (Kg)"
+                value={packageWeight}
                 required
               />
               <br />
               <p className='text-muted'>Package Dimensions (cm)</p>
-              <Input onInput={this.handleInput}
-                className=""
-                name="packageHeight"
-                type='number'
-                step="0.01"
-                placeholder="Height"
-                required
-              />
-              <Input onInput={this.handleInput}
-                className=""
-                name="packageWidth"
-                type='number'
-                step="0.01"
-                placeholder="Width"
-                required
-              />
-              <Input onInput={this.handleInput}
-                className=""
-                name="packageLength"
-                type='number'
-                step="0.01"
-                placeholder="Length"
-                required
-              />
+              <Form.Group widths='equal'>
+                <Input onInput={this.handleInput}
+                  className=""
+                  name="packageHeight"
+                  type='number'
+                  step="0.01"
+                  placeholder="Height"
+                  required
+                />
+                <Input onInput={this.handleInput}
+                  className=""
+                  name="packageWidth"
+                  type='number'
+                  step="0.01"
+                  placeholder="Width"
+                  required
+                />
+                <Input onInput={this.handleInput}
+                  className=""
+                  name="packageLength"
+                  type='number'
+                  step="0.01"
+                  placeholder="Length"
+                  required
+                />
+              </Form.Group>
               <br />
               <Input
                 className=""
                 name="image"
                 type='file'
-                onChange={this.getImage}
+                onChange={getImage}
                 placeholder="Upload Image"
                 required
               />
               <div className="d-flex flex-row mt-3 ml-1">
-                <Button className="btn btn-warning" value="submit" type="submit" disabled={isLoading?true:false}>
-                  {isLoading ? 'Please Wait...' : 'Send Product!'}
-                    </Button>
+                <Button className="btn btn-warning" value="submit" type="submit" disabled={isLoading ? true : false}>
+                  {isLoading ? 'Please Wait...' : all ? 'Send Product to All Marketplaces!' : 'Send Product'}
+                </Button>
               </div>
             </FormGroup>
           </Form>

@@ -8,7 +8,25 @@ import ErrorHandler from './Error';
 
 export default class ShopeeAddProducts extends Component {
     state = {
-        currentUrl: this.props.match.path
+        currentUrl: this.props.match.path,
+        name: "",
+        description: "",
+        price: null,
+        quantity: null,
+        packageWeight: null,
+        file: null
+    }
+
+    handleSharedInput = (event) => {
+        const field = event.target.name
+        const value = event.target.value
+        this.setState({
+            [field]: value
+        })
+    }
+    getImage = (event) => {
+        const file = event.target.files[0]
+        this.setState({ file })
     }
 
     logout = (e) => {
@@ -20,7 +38,7 @@ export default class ShopeeAddProducts extends Component {
     }
 
     render() {
-        const { currentUrl } = this.state
+        const { currentUrl, name, description, packageWeight, price, quantity, file } = this.state
         if (localStorage.getItem('jwt')) {
             if (localStorage.shopeeShopId && localStorage.shopeeShopId !== 'null') {
                 return (
@@ -29,7 +47,7 @@ export default class ShopeeAddProducts extends Component {
                         <Container fluid>
                             <Row className='d-flex'>
                                 <SideNavbar currentUrl={currentUrl} logout={this.logout} />
-                                <AddProductsFormShopee />
+                                <AddProductsFormShopee all={false} file={file} name={name} description={description} packageWeight={packageWeight} price={price} quantity={quantity} handleSharedInput={this.handleSharedInput} getImage={this.getImage} />
                             </Row>
                         </Container>
                     </section>

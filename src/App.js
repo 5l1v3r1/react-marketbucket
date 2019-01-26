@@ -12,6 +12,7 @@ import Home from './pages/Home';
 import Settings from './pages/Settings';
 import LazadaAddProducts from './pages/LazadaAddProducts';
 import ShopeeAddProducts from './pages/ShopeeAddProducts';
+import AllAddProducts from './pages/AllAddProducts';
 
 library.add(faPlus, faIgloo, faGoogle, faStore, faParachuteBox)
 
@@ -54,6 +55,11 @@ class App extends Component {
           <Route path="/shopee/new"
             component={props =>
               <ShopeeAddProducts {...props} />
+            }>
+          </Route>
+          <Route path="/all/new"
+            component={props =>
+              <AllAddProducts {...props} />
             }>
           </Route>
           <Route path="/settings"

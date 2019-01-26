@@ -18,18 +18,13 @@ export default class AddProductsFormShopee extends Component {
     selectedOption1: null,
     selectedOption2: null,
     selectedOption3: null,
-    name: "",
-    description: null,
-    price: null,
-    quantity: null,
-    packageWeight: null,
-    file: null,
     message: null,
     redirect: false,
     errors: [],
     hasError: false,
     isLoading: false
   }
+
 
   componentDidMount = () => {
     axios({
@@ -99,7 +94,8 @@ export default class AddProductsFormShopee extends Component {
 
 
   handleSubmit = (e) => {
-    const { selectedOption3, price, quantity, packageWeight, name, description, selectedAttribute1, selectedAttribute2, selectedAttribute3, file } = this.state
+    const { selectedOption3, selectedAttribute1, selectedAttribute2, selectedAttribute3 } = this.state
+    const { price, quantity, packageWeight, name, description, file } = this.props
     e.preventDefault()
     let formData = new FormData()
     formData.set('id', selectedOption3.id)
@@ -129,7 +125,7 @@ export default class AddProductsFormShopee extends Component {
         const { data } = response;
         const { message } = data
         setTimeout(() => this.setState({ redirect: true }), 2000)
-        this.setState({ message, hasError: false, isLoading:true })
+        this.setState({ message, hasError: false, isLoading: true })
       })
 
       .catch(error => {
@@ -162,28 +158,26 @@ export default class AddProductsFormShopee extends Component {
       })
     }
   }
-  getImage = (event) => {
-    const file = event.target.files[0]
-    this.setState({ file })
-  }
 
   render() {
     const { message, redirect, hasError, errors, isLoading } = this.state
+    const { handleSharedInput, getImage, name, price, packageWeight, description, quantity, all } = this.props
     if (redirect) {
       return <Redirect to='/' />;
     } else {
       return (
 
-        <Col md="9" className="h-100 d-flex align-items-start flex-column" >
-          <Form className="m-auto w-100 p-5" onSubmit={this.handleSubmit}>
-          {message ? <Alert color='info'>{message}</Alert> : null}
-          {hasError ? <div className="">
+        <Col className="h-100 d-flex align-items-start flex-column mt-5" >
+          <Form className="w-100 p-2" onSubmit={this.handleSubmit}>
+            {message ? <Alert color='info'>{message}</Alert> : null}
+            {hasError ? <div className="">
               <small>
                 <Alert color='danger'>{errors}</Alert>
               </small>
             </div>
-            : ''}
+              : ''}
             <FormGroup>
+              <h1>Add Products to Shopee</h1>
               <Select
                 name="category"
                 value={this.state.selectedOption1}
@@ -229,58 +223,64 @@ export default class AddProductsFormShopee extends Component {
                     required />
                 </Fragment>) : null}
               <br />
-              <Input onInput={this.handleInput}
+              <Input onInput={handleSharedInput}
                 className=""
                 name="name"
                 placeholder="Product Name"
+                value={name}
                 required
               />
               <br />
-              <Input onInput={this.handleInput}
+              <Input onInput={handleSharedInput}
                 className=""
                 name="description"
                 placeholder="Description"
+                value={description}
                 required
-              /> {this.state.description && this.state.description.length < 20 ? <span className='text-danger'>must be > 20</span> : null}
+              /> {description && description.length < 20 ? <span className='text-danger'>must be > 20</span> : null}
               <br />
-              <Input onInput={this.handleInput}
+              <Input onInput={handleSharedInput}
                 className=""
                 name="price"
                 type='number'
                 step="0.01"
                 placeholder="Price (MYR)"
+                value={price}
                 required
               />
               <br />
-              <Input onInput={this.handleInput}
+              <Input onInput={handleSharedInput}
                 className=""
                 name="quantity"
                 type='number'
                 placeholder="Quantity"
+                value={quantity}
                 required
               />
               <br />
-              <Input onInput={this.handleInput}
+              <Input onInput={handleSharedInput}
                 className=""
                 name="packageWeight"
                 type='number'
                 step="0.01"
                 placeholder="Package Weight (Kg)"
+                value={packageWeight}
                 required
               />
               <br />
-              <Input
-                className=""
-                name="image"
-                type='file'
-                onChange={this.getImage}
-                placeholder="Upload Image"
-                required
-              />
+              {!all ?
+                <Input
+                  className=""
+                  name="image"
+                  type='file'
+                  onChange={getImage}
+                  placeholder="Upload Image"
+                  required
+                /> : null}
               <div className="d-flex flex-row mt-3">
-              <Button className="btn btn-danger" value="submit" type="submit" disabled={isLoading?true:false}>
+                {!all ? <Button className="btn btn-danger" value="submit" type="submit" disabled={isLoading ? true : false}>
                   {isLoading ? 'Please Wait...' : 'Send Product!'}
-                    </Button>
+                </Button> : null}
               </div>
             </FormGroup>
           </Form>
