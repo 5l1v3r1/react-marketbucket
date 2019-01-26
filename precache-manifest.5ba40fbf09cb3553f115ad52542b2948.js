@@ -20,12 +20,16 @@ self.__precacheManifest = [
     "url": "/React-MarketBucket/static/js/runtime~main.c9f94543.js"
   },
   {
+    "revision": "cd6c777f1945164224dee082abaea03a",
+    "url": "/React-MarketBucket/static/media/outline-icons.cd6c777f.woff2"
+  },
+  {
     "revision": "ef60a4f6c25ef7f39f2d25a748dbecfe",
     "url": "/React-MarketBucket/static/media/outline-icons.ef60a4f6.woff"
   },
   {
-    "revision": "cd6c777f1945164224dee082abaea03a",
-    "url": "/React-MarketBucket/static/media/outline-icons.cd6c777f.woff2"
+    "revision": "9c74e172f87984c48ddf5c8108cabe67",
+    "url": "/React-MarketBucket/static/media/flags.9c74e172.png"
   },
   {
     "revision": "701ae6abd4719e9c2ada3535a497b341",
@@ -38,10 +42,6 @@ self.__precacheManifest = [
   {
     "revision": "0ab54153eeeca0ce03978cc463b257f7",
     "url": "/React-MarketBucket/static/media/icons.0ab54153.woff2"
-  },
-  {
-    "revision": "9c74e172f87984c48ddf5c8108cabe67",
-    "url": "/React-MarketBucket/static/media/flags.9c74e172.png"
   },
   {
     "revision": "faff92145777a3cbaf8e7367b4807987",
