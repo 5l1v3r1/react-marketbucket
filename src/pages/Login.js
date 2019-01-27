@@ -16,11 +16,11 @@ export default class Login extends Component {
         googleProfile: null
     }
 
-    responseGoogle = ( response ) => {
+    responseGoogle = (response) => {
         console.log(response);
         if (response.profileObj) {
             this.setState({
-                googleProfile : response.profileObj
+                googleProfile: response.profileObj
             })
         }
     }
@@ -29,21 +29,21 @@ export default class Login extends Component {
         e.preventDefault()
         const validateEmail = EmailValidator.validate(this.state.email)
         if (validateEmail) {
-            axios.post('http://localhost:5000/api/v1/login', {
+            axios.post('https://marketbucketserver.herokuapp.com/api/v1/login', {
                 email: this.state.email,
                 password: this.state.password
             })
                 .then(response => {
-                const { data } = response;
-                const { auth_token, lazada_token, lazada_refresh, shop_id } = data
+                    const { data } = response;
+                    const { auth_token, lazada_token, lazada_refresh, shop_id } = data
 
-                localStorage.setItem('jwt', auth_token)
-                // localStorage.setItem('currentUser', JSON.stringify(user))
+                    localStorage.setItem('jwt', auth_token)
+                    // localStorage.setItem('currentUser', JSON.stringify(user))
 
-                localStorage.setItem('lazadaToken', lazada_token)
-                localStorage.setItem('lazadaRefresh', lazada_refresh)
-                localStorage.setItem('shopeeShopId', shop_id)
-                
+                    localStorage.setItem('lazadaToken', lazada_token)
+                    localStorage.setItem('lazadaRefresh', lazada_refresh)
+                    localStorage.setItem('shopeeShopId', shop_id)
+
                     this.setState({
                         isLoading: false,
                     })
@@ -74,7 +74,7 @@ export default class Login extends Component {
             const { email } = googleProfile
             axios({
                 method: 'post',
-                url: 'http://127.0.0.1:5000/api/v1/authorize/google',
+                url: 'https://marketbucketserver.herokuapp.com/api/v1/authorize/google',
                 headers: {
                     'content-type': 'application/json',
                 },
@@ -82,30 +82,30 @@ export default class Login extends Component {
                     email: email,
                 }
             })
-            .then(response => {
-                const { data } = response;
-                const { message, auth_token, lazada_token, lazada_refresh, shop_id } = data
-                
-                localStorage.setItem('jwt', auth_token)
-                // localStorage.setItem('currentUser', JSON.stringify(user))
-                
-                localStorage.setItem('lazadaToken', lazada_token)
-                localStorage.setItem('lazadaRefresh', lazada_refresh)
-                localStorage.setItem('shopeeShopId', shop_id)
-                
-                this.setState({
-                    message: message,
-                    confirmError: false
+                .then(response => {
+                    const { data } = response;
+                    const { message, auth_token, lazada_token, lazada_refresh, shop_id } = data
+
+                    localStorage.setItem('jwt', auth_token)
+                    // localStorage.setItem('currentUser', JSON.stringify(user))
+
+                    localStorage.setItem('lazadaToken', lazada_token)
+                    localStorage.setItem('lazadaRefresh', lazada_refresh)
+                    localStorage.setItem('shopeeShopId', shop_id)
+
+                    this.setState({
+                        message: message,
+                        confirmError: false
+                    })
                 })
-            })
-            .catch(error => {
-                console.log(error)
-                this.setState({ errors: error.response.data.message, hasError: true, confirmError: false })
-            });
-            
+                .catch(error => {
+                    console.log(error)
+                    this.setState({ errors: error.response.data.message, hasError: true, confirmError: false })
+                });
+
         }
     }
-    
+
     render() {
         if (localStorage.getItem('jwt')) {
             return <Redirect to='/' />;
@@ -176,7 +176,7 @@ export default class Login extends Component {
                             <Col md="8" className="h-100 d-none d-md-block mt-auto mb-auto" id="login-left-banner" >
                                 <div className="mb-auto mt-3">
                                     <img className="float-right" src="https://s3.amazonaws.com/market.bucket/1.11556.Screenshot_2019-01-08_at_21.01.12.jpg" alt="logo" height="80vh" />
-                                    <img className="float-right" src="https://s3.amazonaws.com/market.bucket/MARKETPLACE1.png" alt="marketplaces" height="400px" width='100%'/>
+                                    <img className="float-right" src="https://s3.amazonaws.com/market.bucket/MARKETPLACE1.png" alt="marketplaces" height="400px" width='100%' />
                                 </div>
                             </Col>
                         </Row>

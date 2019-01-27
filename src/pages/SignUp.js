@@ -37,7 +37,7 @@ export default class SignUp extends Component {
             const { givenName, familyName, email } = googleProfile
             axios({
                 method: 'post',
-                url: 'http://127.0.0.1:5000/api/v1/authorize/google',
+                url: 'https://marketbucketserver.herokuapp.com/api/v1/authorize/google',
                 headers: {
                     'content-type': 'application/json',
                 },
@@ -73,7 +73,7 @@ export default class SignUp extends Component {
         if (password === confirmPassword) {
             axios({
                 method: 'post',
-                url: 'http://127.0.0.1:5000/api/v1/users/create',
+                url: 'https://marketbucketserver.herokuapp.com/api/v1/users/create',
                 headers: {
                     'content-type': 'application/json',
                 },
@@ -208,7 +208,7 @@ export default class SignUp extends Component {
                             <Col md="8" className="h-100 d-none d-md-block mt-auto mb-auto" id="login-left-banner" >
                                 <div className="mb-auto mt-3">
                                     <img className="float-right" src="https://s3.amazonaws.com/market.bucket/1.11556.Screenshot_2019-01-08_at_21.01.12.jpg" alt="logo" height="80vh" />
-                                    <img className="float-right" src="https://s3.amazonaws.com/market.bucket/MARKETPLACE1.png" alt="marketplaces" height="400px" width='100%'/>
+                                    <img className="float-right" src="https://s3.amazonaws.com/market.bucket/MARKETPLACE1.png" alt="marketplaces" height="400px" width='100%' />
                                 </div>
                             </Col>
 
