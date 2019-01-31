@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/React-MarketBucket/precache-manifest.5ba40fbf09cb3553f115ad52542b2948.js"
+  "/react-marketbucket/precache-manifest.cf017bb3b5d7f870648b0e7e368a3610.js"
 );
 
 workbox.clientsClaim();
@@ -28,7 +28,7 @@ self.__precacheManifest = [].concat(self.__precacheManifest || []);
 workbox.precaching.suppressWarnings();
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
 
-workbox.routing.registerNavigationRoute("/React-MarketBucket/index.html", {
+workbox.routing.registerNavigationRoute("/react-marketbucket/index.html", {
   
   blacklist: [/^\/_/,/\/[^\/]+\.[^\/]+$/],
 });
