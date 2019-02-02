@@ -5,7 +5,7 @@ A web app that provides a single dashboard for online stores and sellers to inte
 It was built using React.
 
 Demo:
-https://arsm100.github.io/R-MarketBucket
+https://arsm100.github.io/react-marketbucket
 
 Another Repo existis for the Python/Flask server side at :
 https://github.com/arsm100/MarketBucket
