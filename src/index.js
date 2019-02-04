@@ -11,7 +11,7 @@ import { BrowserRouter } from 'react-router-dom'
 
 ReactDOM.render(
   <BrowserRouter
-    basename="/R-MarketBucket"
+    basename="/react-marketbucket"
   >
     <App />
   </BrowserRouter>, document.getElementById('root'));

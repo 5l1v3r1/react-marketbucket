@@ -70,7 +70,7 @@ export default class LazadaProducts extends Component {
                   <CardImg className='border-bottom' top width="100%" src={product.skus[0].Images[0]} alt="Card image cap" />
                   <CardBody>
                     {/* <CardText className='text-left'><span dangerouslySetInnerHTML={{ __html: product.attributes.short_description }} /></CardText> */}
-                    <CardText><span className='mr-4'>Price : {product.skus[0].price} MYR</span><span className='ml-4'>Stock : {product.skus[0].quantity}</span></CardText>
+                    <CardText><span className='mr-3'>Price : {product.skus[0].price} MYR</span><span className='ml-3'>Stock : {product.skus[0].quantity}</span></CardText>
                   </CardBody>
                   <CardFooter>
                     <CardLink className='mr-3' href={product.skus[0].Url} target="_blank" rel="noopener noreferrer">Product's Page</CardLink>

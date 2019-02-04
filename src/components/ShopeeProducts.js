@@ -70,7 +70,7 @@ export default class LazadaProducts extends Component {
                   <CardImg className='border-bottom' top width="100%" src={product.images[0]} alt="Card image cap" />
                   <CardBody>
                     {/* <CardText className='text-left'><span dangerouslySetInnerHTML={{ __html: product.attributes.short_description }} /></CardText> */}
-                    <CardText><span className='mr-4'>Price : {product.price} MYR</span><span className='ml-4'>Stock : {product.stock}</span></CardText>
+                    <CardText><span className='mr-3'>Price : {product.price} MYR</span><span className='ml-3'>Stock : {product.stock}</span></CardText>
                   </CardBody>
                   <CardFooter>
                     <CardLink className='mr-3' href={`https://shopee.com.my/${product.name.replace(" ", "-")}-i.${shopee}.${product.item_id}`} target="_blank" rel="noopener noreferrer">Product's Page</CardLink>
