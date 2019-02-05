@@ -1,11 +1,11 @@
 self.__precacheManifest = [
   {
-    "revision": "6fcdcec6a16b3e650ccd",
+    "revision": "547273b9dffaa2495f31",
     "url": "/react-marketbucket/static/css/main.deb8538a.chunk.css"
   },
   {
-    "revision": "6fcdcec6a16b3e650ccd",
-    "url": "/react-marketbucket/static/js/main.6fcdcec6.chunk.js"
+    "revision": "547273b9dffaa2495f31",
+    "url": "/react-marketbucket/static/js/main.547273b9.chunk.js"
   },
   {
     "revision": "ee3a8b6d11eb9be2bcd1",
@@ -28,28 +28,24 @@ self.__precacheManifest = [
     "url": "/react-marketbucket/static/media/outline-icons.ef60a4f6.woff"
   },
   {
-    "revision": "9c74e172f87984c48ddf5c8108cabe67",
-    "url": "/react-marketbucket/static/media/flags.9c74e172.png"
+    "revision": "701ae6abd4719e9c2ada3535a497b341",
+    "url": "/react-marketbucket/static/media/outline-icons.701ae6ab.eot"
   },
   {
     "revision": "ad97afd3337e8cda302d10ff5a4026b8",
     "url": "/react-marketbucket/static/media/outline-icons.ad97afd3.ttf"
   },
   {
-    "revision": "701ae6abd4719e9c2ada3535a497b341",
-    "url": "/react-marketbucket/static/media/outline-icons.701ae6ab.eot"
-  },
-  {
     "revision": "0ab54153eeeca0ce03978cc463b257f7",
     "url": "/react-marketbucket/static/media/icons.0ab54153.woff2"
   },
   {
-    "revision": "faff92145777a3cbaf8e7367b4807987",
-    "url": "/react-marketbucket/static/media/icons.faff9214.woff"
-  },
-  {
     "revision": "e8c322de9658cbeb8a774b6624167c2c",
     "url": "/react-marketbucket/static/media/brand-icons.e8c322de.woff2"
+  },
+  {
+    "revision": "faff92145777a3cbaf8e7367b4807987",
+    "url": "/react-marketbucket/static/media/icons.faff9214.woff"
   },
   {
     "revision": "a046592bac8f2fd96e994733faf3858c",
@@ -76,6 +72,10 @@ self.__precacheManifest = [
     "url": "/react-marketbucket/static/media/outline-icons.82f60bd0.svg"
   },
   {
+    "revision": "9c74e172f87984c48ddf5c8108cabe67",
+    "url": "/react-marketbucket/static/media/flags.9c74e172.png"
+  },
+  {
     "revision": "962a1bf31c081691065fe333d9fa8105",
     "url": "/react-marketbucket/static/media/icons.962a1bf3.svg"
   },
@@ -84,7 +84,7 @@ self.__precacheManifest = [
     "url": "/react-marketbucket/static/media/brand-icons.a1a749e8.svg"
   },
   {
-    "revision": "a6c79d56d4126db9e6259275e805c258",
+    "revision": "e314b09cd3072d70f088c69b29dba233",
     "url": "/react-marketbucket/index.html"
   }
 ];

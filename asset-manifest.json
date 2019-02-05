@@ -1,7 +1,7 @@
 {
   "main.css": "/react-marketbucket/static/css/main.deb8538a.chunk.css",
-  "main.js": "/react-marketbucket/static/js/main.6fcdcec6.chunk.js",
-  "main.js.map": "/react-marketbucket/static/js/main.6fcdcec6.chunk.js.map",
+  "main.js": "/react-marketbucket/static/js/main.547273b9.chunk.js",
+  "main.js.map": "/react-marketbucket/static/js/main.547273b9.chunk.js.map",
   "static/css/1.a622a1e6.chunk.css": "/react-marketbucket/static/css/1.a622a1e6.chunk.css",
   "static/js/1.ee3a8b6d.chunk.js": "/react-marketbucket/static/js/1.ee3a8b6d.chunk.js",
   "static/js/1.ee3a8b6d.chunk.js.map": "/react-marketbucket/static/js/1.ee3a8b6d.chunk.js.map",
@@ -11,6 +11,6 @@
   "static/css/main.deb8538a.chunk.css.map": "/react-marketbucket/static/css/main.deb8538a.chunk.css.map",
   "static/css/1.a622a1e6.chunk.css.map": "/react-marketbucket/static/css/1.a622a1e6.chunk.css.map",
   "index.html": "/react-marketbucket/index.html",
-  "precache-manifest.2acb8875fefd06d10eb73e02be596594.js": "/react-marketbucket/precache-manifest.2acb8875fefd06d10eb73e02be596594.js",
+  "precache-manifest.c8f8fb6eb17c9ac75e413744e961bf12.js": "/react-marketbucket/precache-manifest.c8f8fb6eb17c9ac75e413744e961bf12.js",
   "service-worker.js": "/react-marketbucket/service-worker.js"
 }
