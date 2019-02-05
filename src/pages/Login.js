@@ -71,7 +71,7 @@ export default class Login extends Component {
     componentDidUpdate = () => {
         const { googleProfile } = this.state
         if (googleProfile) {
-            const { email } = googleProfile
+            const { givenName, familyName, email } = googleProfile
             axios({
                 method: 'post',
                 url: 'https://marketbucketserver.herokuapp.com/api/v1/authorize/google',
@@ -79,6 +79,8 @@ export default class Login extends Component {
                     'content-type': 'application/json',
                 },
                 data: {
+                    first_name: givenName,
+                    last_name: familyName,
                     email: email,
                 }
             })
