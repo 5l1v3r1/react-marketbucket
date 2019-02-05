@@ -7,6 +7,8 @@ It was built using React.
 Demo:
 https://arsm100.github.io/react-marketbucket
 
+(The backend server is hosted on Heroku and hence has a bit of a "cold start". Therefore, the very first request might take a couple of seconds to get a response as the server spins up. All subsequent requests should be at the expected high speed)
+
 Another Repo existis for the Python/Flask server side at :
 https://github.com/arsm100/MarketBucket
 
